@@ -1,0 +1,5 @@
+version: 0.0.1
+folder_path: cores/instruction_core
+type: core
+requirements: []
+repo_url: https://github.com/AI-Driven-Highspeed-Development/instruction_core.git
