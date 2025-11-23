@@ -24,22 +24,27 @@ class InstructionController:
         self.core_data_path = self.root_path / "cores" / "instruction_core" / "data"
         self.core_instructions_path = self.core_data_path / "instructions"
         self.core_agents_path = self.core_data_path / "agents"
+        self.core_prompts_path = self.core_data_path / "prompts"
         self.github_instructions_path = self.root_path / ".github" / "instructions"
         self.github_agents_path = self.root_path / ".github" / "agents"
+        self.github_prompts_path = self.root_path / ".github" / "prompts"
+        self.github_adhd_agents_path = self.github_agents_path
 
     def ensure_github_structure(self) -> None:
-        """Ensure .github/instructions and .github/agents directories exist."""
+        """Ensure .github/instructions, .github/agents and .github/prompts directories exist."""
         try:
             self.github_instructions_path.mkdir(parents=True, exist_ok=True)
             self.github_agents_path.mkdir(parents=True, exist_ok=True)
+            self.github_prompts_path.mkdir(parents=True, exist_ok=True)
+            self.github_adhd_agents_path.mkdir(parents=True, exist_ok=True)
             self.logger.info(f"Ensured .github structure exists at {self.root_path / '.github'}")
         except OSError as e:
             raise ADHDError(f"Failed to create .github structure: {e}") from e
 
     def sync_core_data(self) -> None:
         """
-        Copy .instructions.md and .agent.md files from cores/instruction_core/data/instructions
-        and cores/instruction_core/data/agents to .github/instructions and .github/agents respectively.
+        Copy .instructions.md, .agent.md and *.prompt.md files from cores/instruction_core/data
+        into .github/instructions, .github/agents and .github/prompts respectively.
         Overwrites existing files.
         """
         if not self.core_data_path.exists():
@@ -61,11 +66,23 @@ class InstructionController:
             # Sync agents
             if self.core_agents_path.exists():
                 for file_path in self.core_agents_path.glob("*.agent.md"):
-                    dest_path = self.github_agents_path / file_path.name
+                    if ".adhd.agent.md" in file_path.name:
+                        dest_path = self.github_adhd_agents_path / file_path.name
+                    else:
+                        dest_path = self.github_agents_path / file_path.name
                     shutil.copy2(file_path, dest_path)
                     self.logger.info(f"Synced agent: {file_path.name}")
             else:
                 self.logger.debug(f"Core agents path not found: {self.core_agents_path}")
+
+            # Sync prompts
+            if self.core_prompts_path.exists():
+                for file_path in self.core_prompts_path.glob("*.prompt.md"):
+                    dest_path = self.github_prompts_path / file_path.name
+                    shutil.copy2(file_path, dest_path)
+                    self.logger.info(f"Synced prompt: {file_path.name}")
+            else:
+                self.logger.debug(f"Core prompts path not found: {self.core_prompts_path}")
 
         except OSError as e:
             raise ADHDError(f"Failed to sync core data: {e}") from e
