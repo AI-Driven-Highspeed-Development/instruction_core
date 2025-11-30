@@ -8,6 +8,7 @@ applyTo: "**/*.agent.md"
 - Create specialized AI personas ("Agents") with distinct roles and boundaries.
 - Ensure agents are self-aware, strictly adherent to rules, and efficient in execution.
 - Standardize the structure of `.agent.md` files for consistent behavior switching.
+- NOTE: Do not repeat rules in <stopping_rules>, <core_philosophy>, and <critical_rules> sections, put the information in the MOST appropriate section only.
 
 ## Required Section Order
 Each agent definition file MUST include sections in this logical flow:
