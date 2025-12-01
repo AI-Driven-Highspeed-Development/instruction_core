@@ -27,7 +27,7 @@
 -   **Project Data Storage**: Use Config-Manager paths (Convention: `./project/data/<module_name>/**`).
 
 ## Module Types
--   **Core**: Fundamental building blocks (e.g., instruction_core, modules_controller_core).
+-   **Core**: Fundamental building blocks of the ADHD Framework, created by the ADHD Framework team, user should never create any core modules unless for extremely rare cases (e.g., instruction_core, modules_controller_core).
 -   **Manager**: High-level orchestrators, coordinating project-wide or external system interactions (e.g., config_manager, temp_files_manager).
 -   **Util**: Reusable tiny tools or helpers (e.g., logger_util).
 -   **Plugin**: Specific feature for projects (e.g., webcam_plugin, comfy_image_gen_plugin)
