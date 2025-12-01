@@ -1,5 +1,5 @@
 ---
-applyTo: "**/.agent_plan/.kanbn/**"
+applyTo: "**/.kanbn/**"
 ---
 
 # Kanbn Format Specification
@@ -9,10 +9,10 @@ Standardized format for `kanbn` planning boards used by the HyperPM agent.
 This format is compatible with the [kanbn](https://github.com/basementuniverse/kanbn) tool and VS Code extension.
 
 ## Directory Structure
-- **Root**: `.agent_plan/.kanbn/`
-- **Index File**: `.agent_plan/.kanbn/index.md`
-- **Tasks Directory**: `.agent_plan/.kanbn/tasks/`
-- **Task Files**: `.agent_plan/.kanbn/tasks/<task-id>.md`
+- **Root**: `.kanbn/`
+- **Index File**: `.kanbn/index.md`
+- **Tasks Directory**: `.kanbn/tasks/`
+- **Task Files**: `.kanbn/tasks/<task-id>.md`
 
 ## Index File Structure (`index.md`)
 
@@ -27,6 +27,14 @@ startedColumns:
   - In Progress
 completedColumns:
   - Done
+defaultTaskWorkload: 2
+taskWorkloadTags:
+  Nothing: 0
+  Tiny: 1
+  Small: 2
+  Medium: 3
+  Large: 5
+  Huge: 8
 ---
 
 # Project Name
@@ -35,22 +43,23 @@ Project description goes here.
 
 ## Backlog
 
-- [Task Title](tasks/task-id-1.md)
-- [Another Task](tasks/task-id-2.md)
+- [task-title] (tasks/task-title.md)
+- [another-task] (tasks/another-task.md)
 
 ## In Progress
 
-- [Active Task](tasks/task-id-3.md)
+- [active-task] (tasks/active-task.md)
 
 ## Done
 
-- [Completed Task](tasks/task-id-4.md)
+- [completed-task] (tasks/completed-task.md)
 ```
 
 ### Rules for Index
+- **Use Options**: For new boards, use the above YAML front-matter options.
 - **Level-1 Heading**: Must be the Project Name.
-- **Level-2 Headings**: Define the Columns (Lanes).
-- **Task Links**: Must be relative links to files in the `tasks/` directory. Format: `- [Task Name](tasks/<filename>.md)`.
+- **Level-2 Headings**: Define the Columns (Lanes).`
+- **Task Links**: Must be relative links to files in the `tasks/` directory. Format: `- [filename] (tasks/<filename>.md)`. Must use kebab-case for filenames and titles, they must match exactly. NO spaces between brackets and parentheses (the example above with a space is to make this stupid markdown parser not freak out...).
 
 ## Task File Structure (`tasks/<task-id>.md`)
 
@@ -81,7 +90,7 @@ Follow markdown syntax.
 
 ## Relations
 
-- [blocks tasks/other-task.md](other-task.md)
+- [blocks other-task.md] (other-task.md)
 
 ## Comments
 
@@ -95,9 +104,9 @@ Follow markdown syntax.
 - **YAML Front-matter**:
     - `created`: ISO 8601 date string.
     - `updated`: ISO 8601 date string.
-    - `assigned`: String (optional).
+    - `assigned`: String (optional), must have quotation marks.
     - `progress`: Number between 0.0 and 1.0.
-    - `tags`: List of strings.
+    - `tags`: List of strings. Must be list format.
     - `due`: ISO 8601 date string (optional).
     - `started`: ISO 8601 date string (optional).
     - `completed`: ISO 8601 date string (optional).
@@ -107,5 +116,63 @@ Follow markdown syntax.
     - `## Relations`: List of links to other tasks.
     - `## Comments`: List of comments with `author` and `date`.
 
+#### Available Tags
+
+- You must use tags from the following predefined set to ensure consistency across tasks, you may use multiple tags per task.
+- You must include at least one tag from the "Task Workload Tags" category, default workload is "Small" if none specified.
+
+##### Work Type Tags
+- feature: New feature implementation
+- bug: Bug fixing
+- chore: Routine tasks, dependency updates, code cleanup
+- refactor: Code restructuring without changing functionality
+- testing: Writing and running tests
+- documentation: Writing and updating documentation
+- research: Exploration and feasibility tasks
+- design: Architectural or visual design tasks
+- planning: Requirements gathering and task breakdown
+- spike: Timeboxed investigation or proof-of-concept
+
+##### Domain / Component Tags
+- frontend: Client-side, UI, and presentation layer
+- backend: Server-side logic and services
+- database: Data storage, schema, and queries
+- api: API endpoints and integrations
+- infrastructure: Deployment, servers, and environment setup
+- ci-cd: Continuous Integration and Deployment pipelines
+- security: Authentication, authorization, and safety
+- performance: Optimization and efficiency improvements
+- accessibility: Usability and accessibility improvements
+- ui-ux: User Interface and User Experience design
+- algorithm: Algorithm and computational logic
+- devtools: Developer tooling, scripts, and CLI utilities
+- config: Configuration files, settings, and environment variables
+- logging: Logging, monitoring, and observability
+
+##### Management Tags
+- communication: Meetings, emails, and coordination
+- training: Onboarding and knowledge transfer
+- review: Code review and quality assurance
+- devops: Operations and infrastructure management
+- maintenance: General upkeep and system health
+- meta: Meta tasks related to project management itself
+- support: User support, issue triage, and assistance
+
+##### Priority Tags
+- urgent: Tasks requiring immediate attention
+- high-priority: Tasks with high priority
+- medium-priority: Tasks with medium priority
+- low-priority: Tasks with low priority
+- not-planned: Tasks not planned for current cycle, but may be revisited later
+- blocked: Tasks currently blocked by dependencies
+
+##### Task Workload Tags
+- Nothing: 0
+- Tiny: 1
+- Small: 2
+- Medium: 3
+- Large: 5
+- Huge: 8
+
 ## File Locations
-- Workspace-level: `.agent_plan/.kanbn/`
+- Workspace-level: `.kanbn/`
