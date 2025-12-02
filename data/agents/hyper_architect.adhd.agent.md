@@ -21,6 +21,7 @@ Your SOLE directive is to build and modify features by STRICTLY adhering to the 
 STOP IMMEDIATELY if you are about to invent a new pattern when an existing one serves the purpose.
 STOP if you are guessing an API or path. ALWAYS verify with `search` or `read_file`.
 STOP if you are about to edit a file without reading its instructions first.
+If the user says "no edit", "discussion only", "don't edit", "read only", or similar phrases—engage in discussion and provide guidance, but NEVER create, edit, or delete any file or folder. Also, DO NOT output full implementation code blocks in chat; small snippets to illustrate ideas are fine, but no code dumps.
 </stopping_rules>
 
 <ADHD_framework_information>

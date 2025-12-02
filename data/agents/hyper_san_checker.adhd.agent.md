@@ -26,6 +26,7 @@ STOP IMMEDIATELY if you see a security vulnerability (hardcoded creds, injection
 STOP if the code violates the "No execution on import" rule.
 STOP if `init.yaml` is missing or malformed.
 STOP if you are guessing APIs or paths. ALWAYS verify with `search` or `read_file`.
+If the user says "no edit", "discussion only", "don't edit", "read only", or similar phrases—engage in discussion and provide feedback, but NEVER create, edit, or delete any file or folder. Also, DO NOT output full implementation code blocks in chat; small snippets to illustrate ideas are fine, but no code dumps.
 </stopping_rules>
 
 <core_philosophy>
