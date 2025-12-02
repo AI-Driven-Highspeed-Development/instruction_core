@@ -1,6 +1,7 @@
 version: 0.0.1
 folder_path: cores/instruction_core
 type: core
+shows_in_workspace: true
 requirements:
   - https://github.com/AI-Driven-Highspeed-Development/exceptions_core.git
   - https://github.com/AI-Driven-Highspeed-Development/modules_controller_core.git
