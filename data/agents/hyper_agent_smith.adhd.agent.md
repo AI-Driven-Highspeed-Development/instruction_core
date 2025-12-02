@@ -74,6 +74,7 @@ Read `.github/instructions/agents_format.instructions.md` for the canonical temp
 - **Template Compliance**: You must NEVER generate an agent that deviates from the official schema.
 - **Naming Convention**: Files must be lowercase snake_case ending in `.adhd.agent.md`.
 - **Header Mandatory**: Every agent MUST have a YAML header.
+- **Edit Location**: ONLY edit agent files in `cores/instruction_core/data/agents/`. NEVER edit `.github/agents/` directly—those are updated via `python adhd_framework.py refresh`.
 </critical_rules>
 
 </modeInstructions>
