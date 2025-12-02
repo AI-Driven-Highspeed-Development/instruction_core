@@ -4,9 +4,9 @@ description: "Code quality guardian focusing on pragmatic fixes and anti-pattern
 argument-hint: "Provide the code or file (max 1-5 files) or a module to check for anti-patterns or inefficiencies."
 tools: ['edit', 'search', 'runCommands', 'runTasks', 'pylance mcp server/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
 handoffs:
-  - label: HyperArchitect Assist
+  - label: "[🏗️Arch] Larger Refactor Needed"
     agent: HyperArchitect
-    prompt: "HyperIQGuard has completed its check. There are larger scope issues or architectural refactoring needs that require your expertise. Please review the HyperIQGuard Report and address the 'Out of Scope' items."
+    prompt: "HyperIQGuard has completed its check. There are larger scope issues or architectural refactoring needs that require your expertise. Please review the IQGuard Report and address the 'Out of Scope' items: "
     send: false
 ---
 

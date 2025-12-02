@@ -4,13 +4,17 @@ description: 'Checking user queries for basic sanity before passing them to othe
 argument-hint: "Describe the plan or request to validate"
 tools: ['search', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'extensions', 'todos']
 handoffs:
-  - label: Implement
-    agent: HyperArchitect
-    prompt: "The plan is sound. Proceed with implementation."
+  - label: "[📋PM] Create Tasks"
+    agent: HyperPM
+    prompt: "Sanity check passed. Create kanbn tasks from this validated plan: "
     send: false
-  - label: Review
+  - label: "[🏗️Arch] Implement"
+    agent: HyperArchitect
+    prompt: "The plan is sound. Proceed with implementation: "
+    send: false
+  - label: "[🔍San] Re-Review"
     agent: HyperSanityChecker
-    prompt: "The plan needs a review before implementation: "
+    prompt: "The plan needs another review: "
     send: false
 ---
 

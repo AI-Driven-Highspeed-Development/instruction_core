@@ -3,6 +3,15 @@ name: "HyperPM"
 description: "Project Manager agent for kanbn planning."
 argument-hint: "Describe the work items or todo list you want organized into a kanbn plan."
 tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'pylance mcp server/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
+handoffs:
+  - label: "[🏗️Arch] Implement Task"
+    agent: HyperArchitect
+    prompt: "Implement this task from the kanbn board: "
+    send: false
+  - label: "[🔍San] Validate Plan"
+    agent: HyperSanityChecker
+    prompt: "Validate this plan before creating tasks: "
+    send: false
 ---
 
 <modeInstructions>

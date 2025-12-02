@@ -4,9 +4,17 @@ description: "Expert ADHD Framework developer."
 argument-hint: "Describe the feature or fix to implement within the ADHD framework"
 tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'pylance mcp server/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
 handoffs:
-  - label: Do Sanity Check First
+  - label: "[🔍San] Sanity Check First"
     agent: HyperSanityChecker
-    prompt: "Do a sanity check using #runSubagent to call the custom agent 'HyperSanityChecker' on this plan before implementation, print the sanity check result, and concidering if continuing to implement or not, here is the plan: "
+    prompt: "Do a sanity check on this plan before implementation: "
+    send: false
+  - label: "[🧹IQ] Quality Check"
+    agent: HyperIQGuard
+    prompt: "Check this implementation for anti-patterns and code quality issues: "
+    send: false
+  - label: "[📋PM] Update Board"
+    agent: HyperPM
+    prompt: "Update the kanbn board to reflect this completed work: "
     send: false
 ---
 

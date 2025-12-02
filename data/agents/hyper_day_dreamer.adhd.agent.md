@@ -3,6 +3,15 @@ name: "HyperDayDreamer"
 description: "Visionary architect for long-term planning and conceptualization."
 argument-hint: "Describe the long-term vision or concept to explore"
 tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'pylance mcp server/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
+handoffs:
+  - label: "[🔍San] Review Vision"
+    agent: HyperSanityChecker
+    prompt: "Review this vision/plan for clarity, sanity, and completeness before proceeding: "
+    send: false
+  - label: "[📋PM] Create Tasks"
+    agent: HyperPM
+    prompt: "Create kanbn tasks from this documented vision: "
+    send: false
 ---
 
 <modeInstructions>
