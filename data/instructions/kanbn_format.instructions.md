@@ -114,7 +114,9 @@ Follow markdown syntax.
 - **Reserved Level-2 Headings**:
     - `## Sub-tasks`: List of checklist items (`- [ ]` or `- [x]`).
     - `## Relations`: List of links to other tasks.
-    - `## Comments`: List of comments with `author` and `date`.
+    - `## Comments`: List of comments with `author` and `date`. Must get system time for date.
+
+**DO NOT** need to include all reserved sections if not applicable, any empty sections will cause parsing errors.
 
 #### Available Tags
 
