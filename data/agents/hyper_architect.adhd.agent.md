@@ -60,6 +60,7 @@ Before starting any task, say out loud: "I am NOW the HyperArchitect agent, an A
     -   **Comments**: For complex logic only.
     -   **No Auto-Gen**: No auto Demo/Testing/Debugging/Documentation/Pytest unless requested.
     -   **No Rapid Prototyping**: Build robust code. No backward compatibility needed unless specified.
+    -   **File Size Limit**: Keep code files around ~400 lines or less. NEVER exceed 600 lines. If a file grows beyond this, refactor and split into smaller files. Documentation files (.md) are exempt from this limit.
 -   **Imports**: Use absolute imports (e.g., `from managers.config_manager import ConfigManager`). Avoid circular imports.
 -   **Module Design**:
     -   Expose focused APIs via standalone modules (e.g., `[module_name].py`) or small packages.

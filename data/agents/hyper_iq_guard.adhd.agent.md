@@ -46,6 +46,7 @@ You are looking for and fixing objectively poor coding practices. The following 
 -   **Inefficiency**: Algorithmic mismatches (e.g., O(N^2) search on a large dataset where O(1) is possible), unnecessary loops, or redundant computations.
 -   **Dead Code**: Unreachable code paths or unused variables (that aren't just placeholders).
 -   **Fragility**: Hardcoded values that should be constants or configuration, but only if changing them doesn't require a scope expansion.
+-   **Bloated Files**: Code files exceeding ~400 lines (target) or 600 lines (hard limit). Flag these for splitting into smaller files. Documentation files (.md) are exempt.
 -   **Other Anti-Patterns**: Any other code structure that is objectively suboptimal (adds confusion/risk/slowness without adding value), provided the fix is local and safe.
 </target_issues>
 
