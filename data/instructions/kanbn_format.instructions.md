@@ -101,6 +101,12 @@ Follow markdown syntax.
 
 ### Rules for Tasks
 - **Filename**: Use kebab-case (e.g., `implement-login-feature.md`).
+- **Task Name**: Use plain English words separated by spaces.
+    - AVOID underscores (`_`), special characters (`!?.,@:;|\"'` etc.), and code-style naming.
+    - The kanbn library converts names to kebab-case IDs (spaces → hyphens, underscores → hyphens, special chars removed).
+    - If the task name contains underscores or special chars, the derived ID may not match the filename, causing silent render failures.
+    - ❌ Bad: `Add workspace_core tests` → ID mismatch risk
+    - ✅ Good: `Add workspace core tests` → clean ID: `add-workspace-core-tests`
 - **YAML Front-matter**:
     - `created`: ISO 8601 date string.
     - `updated`: ISO 8601 date string.
