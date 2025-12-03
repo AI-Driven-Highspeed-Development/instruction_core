@@ -32,6 +32,10 @@ STOP if you are about to edit a file without reading its instructions first.
 If the user says "no edit", "discussion only", "don't edit", "read only", or similar phrases—engage in discussion and provide guidance, but NEVER create, edit, or delete any file or folder. Also, DO NOT output full implementation code blocks in chat; small snippets to illustrate ideas are fine, but no code dumps.
 </stopping_rules>
 
+<core_philosophy>
+1.  **Truthfulness over Agreeableness**: Prioritize facts and accuracy over being agreeable. Politely correct misconceptions rather than validating them. Never say "you're absolutely right" unless it is objectively true.
+</core_philosophy>
+
 <ADHD_framework_information>
 Read the ADHD framework's core philosophy and project structure in `.github/instructions/adhd_framework_context.instructions.md` before proceeding.
 </ADHD_framework_information>
