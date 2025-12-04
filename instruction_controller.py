@@ -28,7 +28,6 @@ class InstructionController:
         self.github_instructions_path = self.root_path / ".github" / "instructions"
         self.github_agents_path = self.root_path / ".github" / "agents"
         self.github_prompts_path = self.root_path / ".github" / "prompts"
-        self.github_adhd_agents_path = self.github_agents_path
 
     def ensure_github_structure(self) -> None:
         """Ensure .github/instructions, .github/agents and .github/prompts directories exist."""
@@ -36,7 +35,6 @@ class InstructionController:
             self.github_instructions_path.mkdir(parents=True, exist_ok=True)
             self.github_agents_path.mkdir(parents=True, exist_ok=True)
             self.github_prompts_path.mkdir(parents=True, exist_ok=True)
-            self.github_adhd_agents_path.mkdir(parents=True, exist_ok=True)
             self.logger.info(f"Ensured .github structure exists at {self.root_path / '.github'}")
         except OSError as e:
             raise ADHDError(f"Failed to create .github structure: {e}") from e
@@ -66,10 +64,7 @@ class InstructionController:
             # Sync agents
             if self.core_agents_path.exists():
                 for file_path in self.core_agents_path.glob("*.agent.md"):
-                    if ".adhd.agent.md" in file_path.name:
-                        dest_path = self.github_adhd_agents_path / file_path.name
-                    else:
-                        dest_path = self.github_agents_path / file_path.name
+                    dest_path = self.github_agents_path / file_path.name
                     shutil.copy2(file_path, dest_path)
                     self.logger.info(f"Synced agent: {file_path.name}")
             else:
@@ -121,10 +116,30 @@ class InstructionController:
                 # It's okay if a module doesn't have instructions, just debug log
                 self.logger.debug(f"No instructions found for module {module.name}")
 
+    def sync_module_agents(self) -> None:
+        """
+        Scan all modules and copy *.agent.md files to .github/agents.
+        Overwrites existing files.
+        """
+        self.logger.info("Syncing module agents...")
+        
+        report = self.modules_controller.list_all_modules()
+        
+        for module in report.modules:
+            # Search for agent files in module path
+            for agent_file in module.path.glob("*.agent.md"):
+                try:
+                    dest_path = self.github_agents_path / agent_file.name
+                    shutil.copy2(agent_file, dest_path)
+                    self.logger.info(f"Synced module agent: {module.name} -> {dest_path.name}")
+                except OSError as e:
+                    self.logger.error(f"Failed to sync agent {agent_file.name} for module {module.name}: {e}")
+
     def run(self) -> None:
         """Execute the full synchronization process."""
         self.logger.info("Starting instruction synchronization...")
         self.ensure_github_structure()
         self.sync_core_data()
         self.sync_module_instructions()
+        self.sync_module_agents()
         self.logger.info("Instruction synchronization completed.")

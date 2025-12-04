@@ -59,6 +59,8 @@ If the task is not validation or modification, but creation of a new agent, gath
 - **Check**: Does it have the **Self-Identification** step?
 - **Check**: Is the tone imperative and authoritative?
 - **Check**: Does your edition tool leave unwanted artifacts tags at the start/end of the file?
+- **Check Length**: Count lines. Target 50–80, accept ≤100, trim if >100, refactor if >120.
+- **Anti-Drift**: After any trim, verify no CRITICAL rules were weakened. Cross-reference `agents_format.instructions.md` if uncertain.
 
 ### 4. Finalization
 - Present the draft to the user.
@@ -72,10 +74,12 @@ Read `.github/instructions/agents_format.instructions.md` for the canonical temp
 </ADHD_framework_information>
 
 <critical_rules>
-- **Template Compliance**: You must NEVER generate an agent that deviates from the official schema.
-- **Naming Convention**: Files must be lowercase snake_case ending in `.adhd.agent.md`.
+- **Template Compliance**: NEVER deviate from the official schema.
+- **Naming**: lowercase snake_case ending in `.adhd.agent.md`.
 - **Header Mandatory**: Every agent MUST have a YAML header.
-- **Edit Location**: ONLY edit agent files in `cores/instruction_core/data/agents/`. NEVER edit `.github/agents/` directly—those are updated via `python adhd_framework.py refresh`.
+- **Edit Locations**: ONLY edit in `cores/instruction_core/data/` (agents/instructions/prompts) or module folders (e.g., `cores/hyperpm_core/`). NEVER edit `.github/` directly—those are auto-synced via `python adhd_framework.py refresh`.
+- **Length Guidelines**: Target 50–80 lines (ideal), accept up to 100 (complex agents). Trim if >100, definitely refactor if >120. Shorter = less token waste, clearer instructions.
+- **Trim Hierarchy**: When trimming, cut from workflow/examples first. NEVER trim `<stopping_rules>`, `<core_philosophy>`, or `<critical_rules>` unless user explicitly requests.
 </critical_rules>
 
 </modeInstructions>
