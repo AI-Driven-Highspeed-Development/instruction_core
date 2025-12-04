@@ -4,42 +4,75 @@ description: Update ADHD module requirements in init.yaml and PyPI requirements 
 
 # Update Requirements
 
-Update all module requirements across the ADHD project. This involves two separate tasks:
+Update all module requirements across the ADHD project using import analysis.
+
+## Workflow (Using adhd_mcp)
+
+### Step 1: Scan All Modules with Import Analysis
+Call `list_modules(with_imports=True)` to get:
+```python
+{
+  "modules": [{
+    "name": "kanbn_mcp",
+    "imports": {
+      "adhd": ["utils.logger_util", "managers.config_manager"],
+      "third_party": ["yaml", "mcp.server.fastmcp"]
+    },
+    "init_yaml_requirements": ["https://...Logger-Util.git"],
+    "requirements_txt": ["PyYAML>=6.0", "mcp>=1.2.0"]
+  }]
+}
+```
+
+### Step 2: Analyze Gaps
+For each module, compare:
+- `imports.adhd` vs `init_yaml_requirements` → find missing ADHD deps
+- `imports.third_party` vs `requirements_txt` → find missing PyPI packages
+
+### Step 3: Map Import Names to Packages
+Use your knowledge to map:
+- `yaml` → `PyYAML`
+- `mcp.server.fastmcp` → `mcp`
+- `utils.logger_util` → `https://github.com/AI-Driven-Highspeed-Development/Logger-Util.git`
+
+### Step 4: Edit Files Directly
+Update `init.yaml` and `requirements.txt` for each module with missing deps.
+
+---
 
 ## Task 1: Update ADHD Module Requirements (init.yaml)
 
-For all **non-core** modules (managers, plugins, utils, mcps), update the `requirements` field in their `init.yaml` files.
-
-**IMPORTANT**: Read `.github/instructions/modules.init.yaml.instructions.md` first to understand the format.
+**IMPORTANT**: Read `.github/instructions/modules.init.yaml.instructions.md` first.
 
 - The `requirements` field lists ADHD module GitHub URLs (NOT PyPI packages).
 - Format: `https://github.com/AI-Driven-Highspeed-Development/<module_name>.git`
-- **Transitive dependencies are OK**: Only list DIRECT dependencies. If module A requires B, and B requires C, module A does NOT need to list C—it's transitively included via B.
-- Do NOT touch `cores/` modules unless I explicitly say "include cores" or "update cores too".
-
-**Steps:**
-1. List all modules with `python adhd_framework.py list`
-2. For each non-core module, read its `init.yaml`
-3. Verify each requirement URL is valid and up-to-date
-4. Update if needed
+- **Transitive dependencies are OK**: Only list DIRECT dependencies.
+- Do NOT touch `cores/` unless explicitly requested.
 
 ## Task 2: Update PyPI Requirements (requirements.txt)
 
-For all **non-core** modules, update the `requirements.txt` files with the latest PyPI package versions.
-
-**Also update the root `requirements.txt`.**
-
-**IMPORTANT**: 
 - `requirements.txt` is for PyPI packages ONLY (e.g., `PyYAML`, `requests`)
-- Do NOT put ADHD module URLs in requirements.txt (those go in init.yaml)
-- Skip `cores/` modules unless I explicitly request
+- Do NOT put ADHD module URLs in requirements.txt
+- Also update the root `requirements.txt`
 
-**Steps:**
-1. For each non-core module with a `requirements.txt`, check for outdated packages
-2. Update to latest compatible versions
-3. Update root `requirements.txt` as well
+---
+
+## Example Analysis
+
+If a module has:
+```python
+imports.adhd = ["utils.logger_util", "cores.yaml_reading_core"]
+init_yaml_requirements = []  # Empty!
+```
+
+Then add to `init.yaml`:
+```yaml
+requirements:
+  - https://github.com/AI-Driven-Highspeed-Development/Logger-Util.git
+  # Note: cores are internal, don't add them
+```
 
 ---
 
 **Default behavior**: Skip all `cores/` modules.
-**To include cores**: Say "include cores" or "update cores too" etc. when using this prompt.
+**To include cores**: Say "include cores" or "update cores too".

@@ -2,7 +2,7 @@
 name: "HyperArchitect"
 description: "Expert ADHD Framework developer."
 argument-hint: "Describe the feature or fix to implement within the ADHD framework"
-tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'pylance mcp server/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
+tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'pylance mcp server/*', 'adhd_mcp/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
 handoffs:
   - label: "[🔍San] Sanity Check First"
     agent: HyperSanityChecker
