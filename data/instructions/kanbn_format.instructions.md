@@ -103,10 +103,44 @@ Follow markdown syntax.
 - **Filename**: Use kebab-case (e.g., `implement-login-feature.md`).
 - **Task Name**: Use plain English words separated by spaces.
     - AVOID underscores (`_`), special characters (`!?.,@:;|\"'` etc.), and code-style naming.
-    - The kanbn library converts names to kebab-case IDs (spaces → hyphens, underscores → hyphens, special chars removed).
+    - The kanbn library converts names to kebab-case IDs using `paramCase()` which has specific camelCase handling.
     - If the task name contains underscores or special chars, the derived ID may not match the filename, causing silent render failures.
     - ❌ Bad: `Add workspace_core tests` → ID mismatch risk
     - ✅ Good: `Add workspace core tests` → clean ID: `add-workspace-core-tests`
+
+### Task ID Generation (CRITICAL)
+
+The kanbn library uses `paramCase()` from the `change-case` package to generate task IDs from names. This algorithm has specific behavior with camelCase and acronyms:
+
+#### Algorithm Rules
+1. **Spaces** → hyphens (`Setup Project` → `setup-project`)
+2. **camelCase splits** → hyphens inserted before uppercase letters (`FastAPI` → `fast-api`)
+3. **Consecutive uppercase (acronyms)** → treated as single word (`HTTP` → `http`, `XMLParser` → `xmlparser`)
+4. **Numbers** → preserved, hyphen inserted before uppercase after number (`123Test` → `123-test`)
+5. **Special characters** → removed
+6. **Underscores** → converted to hyphens
+
+#### Examples (verified against actual kanbn)
+| Task Name | Generated ID | Notes |
+|-----------|--------------|-------|
+| `Setup FastAPI Project` | `setup-fast-api-project` | camelCase splits |
+| `OAuth2 Provider` | `oauth2-provider` | Number stays attached |
+| `MyOAuth2Provider Test` | `my-oauth2-provider-test` | Complex camelCase |
+| `HTTPServer Setup` | `httpserver-setup` | Acronym = single word |
+| `XMLParser Implementation` | `xmlparser-implementation` | Acronym = single word |
+| `getHTTPResponse Handler` | `get-httpresponse-handler` | Mixed case + acronym |
+| `userID Validation` | `user-id-validation` | Ends with acronym |
+| `iOS App Support` | `i-os-app-support` | Single lowercase before caps |
+| `Test123 Feature` | `test123-feature` | Word + number |
+| `123Test Feature` | `123-test-feature` | Starts with number |
+| `Simple Task` | `simple-task` | Normal case |
+| `already-kebab-case` | `already-kebab-case` | Already kebab |
+
+#### Best Practices
+- **AVOID camelCase in task names** when possible - use spaces instead
+- **AVOID acronyms** like `API`, `HTTP`, `XML` in task names - spell them out or use lowercase
+- **PREFER**: `Setup Fast API Project` over `Setup FastAPI Project` for predictable IDs
+- The MCP handles ID generation automatically - use the MCP tools, NEVER manually create task files
 - **YAML Front-matter**:
     - `created`: ISO 8601 date string.
     - `updated`: ISO 8601 date string.

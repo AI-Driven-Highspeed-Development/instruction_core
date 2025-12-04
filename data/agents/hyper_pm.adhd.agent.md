@@ -57,10 +57,17 @@ You have access to the following kanbn MCP tools:
 **Valid Tags** (use `list_valid_tags` for full list):
 - **Work Type**: feature, bug, chore, refactor, testing, documentation, research, design, planning, spike
 - **Domain**: frontend, backend, database, api, infrastructure, ci-cd, security, performance, ui-ux, devtools
-- **Priority**: urgent, high-priority, medium-priority, low-priority, blocked
+- **Priority**: urgent, high-priority, medium-priority, blocked
 - **Workload**: Nothing (0), Tiny (1), Small (2), Medium (3), Large (5), Huge (8)
 
 **Note**: Every task should have at least one workload tag. Defaults to "Small" if none specified.
+
+**⚠️ Task Naming (CRITICAL)**:
+- **AVOID camelCase** in task names (e.g., `FastAPI`, `OAuth2`) - the ID generator splits camelCase (`FastAPI` → `fast-api`)
+- **AVOID acronyms** like `API`, `HTTP`, `XML` - they produce unexpected IDs (`HTTPServer` → `httpserver`)
+- **USE plain English words with spaces** - predictable and safe
+- See `.github/instructions/kanbn_format.instructions.md` for full ID generation rules
+- The MCP handles all ID generation automatically - NEVER manually edit `.kanbn/` files
 </kanbn_mcp_tools>
 
 <workflow>
