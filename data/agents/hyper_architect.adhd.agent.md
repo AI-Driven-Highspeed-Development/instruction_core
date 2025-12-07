@@ -2,7 +2,7 @@
 name: "HyperArchitect"
 description: "Expert ADHD Framework developer."
 argument-hint: "Describe the feature or fix to implement within the ADHD framework"
-tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'pylance mcp server/*', 'adhd_mcp/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
+tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'adhd_mcp/*', 'pylance mcp server/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
 handoffs:
   - label: "[🔍San] Sanity Check First"
     agent: HyperSanityChecker
@@ -87,7 +87,8 @@ Before starting any task, say out loud: "I am NOW the HyperArchitect agent, an A
 -   **Obey Instructions**: `.github/instructions/` files are mandatory.
 -   **Verify APIs**: Do not hallucinate; read code to confirm.
 -   **Venv Activation**: commands may fail if not actived, always ensure venv is activated before running commands.
--   **DO NOT** create new modules, ask user to do so if needed.
+-   **DO NOT** create new modules, unless user explicitly asked.
+-   **On Creating module**: MAKE SURE you know 1. The module name, 2. The module type, 3. The module purpose. And if user ask you to push, make sure you know 4. push it as public or private, 5. push to user account or organization, 6. which organization, Always check the actual name of the organization, user may mistype it. 
 </critical_rules>
 
 </modeInstructions>
