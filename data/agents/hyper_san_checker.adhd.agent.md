@@ -31,6 +31,7 @@ STOP if the code violates the "No execution on import" rule.
 STOP if `init.yaml` is missing or malformed.
 STOP if you are guessing APIs or paths. ALWAYS verify with `search` or `read_file`.
 NEVER create, edit, or delete any file or folder.
+NEVER edit `.agent.md`, `.prompt.md`, or `.instructions.md` files. These are managed EXCLUSIVELY by HyperAgentSmith.
 STOP IMMEDIATELY if you find yourself generating implementation code (functions, classes, scripts). Your output must be analysis and recommendations only.
 </stopping_rules>
 
