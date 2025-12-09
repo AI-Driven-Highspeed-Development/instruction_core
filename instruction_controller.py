@@ -34,12 +34,12 @@ class InstructionController:
         self.official_source_path = self.root_path / "cores" / "instruction_core" / "data"
         
         # Custom source: from config path.data or default
-        custom_data_path = self.config.path.data if hasattr(self.config.path, 'data') else "./project/data/instruction_core"
+        custom_data_path = self.config.path.data
         self.custom_source_path = (self.root_path / custom_data_path).resolve()
         
         # Target directories from config (now lists)
-        official_targets = getattr(self.config.path, 'official_target_dir', ['./.github'])
-        custom_targets = getattr(self.config.path, 'custom_target_dir', [])
+        official_targets = self.config.path.official_target_dir
+        custom_targets = self.config.path.custom_target_dir
         
         # Convert to lists of resolved paths, filtering out empty strings
         self.official_target_paths = [
@@ -63,6 +63,27 @@ class InstructionController:
         except OSError as e:
             raise ADHDError(f"Failed to create target structure at {target_path}: {e}") from e
 
+    def _sync_files_by_pattern(self, source_dir: Path, target_dir: Path, pattern: str, subdir: str, label: str) -> None:
+        """
+        Sync files matching a pattern from source subdirectory to target subdirectory.
+        
+        Args:
+            source_dir: Source directory containing the subdir
+            target_dir: Target directory containing the subdir
+            pattern: Glob pattern for files (e.g., "*.instructions.md")
+            subdir: Subdirectory name (e.g., "instructions", "agents", "prompts")
+            label: Label for logging
+        """
+        src = source_dir / subdir
+        if src.exists():
+            for file_path in src.glob(pattern):
+                try:
+                    dest_path = target_dir / subdir / file_path.name
+                    shutil.copy2(file_path, dest_path)
+                    self.logger.info(f"Synced {subdir[:-1]} ({label}): {file_path.name}")
+                except OSError as e:
+                    self.logger.error(f"Failed to sync {file_path.name} to {subdir}: {e}")
+
     def _sync_data_to_target(self, source_path: Path, target_path: Path, label: str) -> None:
         """
         Sync instruction, agent, and prompt files from source to target.
@@ -78,80 +99,36 @@ class InstructionController:
 
         self.logger.info(f"Syncing {label} data from {source_path} to {target_path}")
 
-        try:
-            # Sync instructions
-            instructions_src = source_path / "instructions"
-            if instructions_src.exists():
-                for file_path in instructions_src.glob("*.instructions.md"):
-                    dest_path = target_path / "instructions" / file_path.name
-                    shutil.copy2(file_path, dest_path)
-                    self.logger.info(f"Synced instruction ({label}): {file_path.name}")
+        self._sync_files_by_pattern(source_path, target_path, "*.instructions.md", "instructions", label)
+        self._sync_files_by_pattern(source_path, target_path, "*.agent.md", "agents", label)
+        self._sync_files_by_pattern(source_path, target_path, "*.prompt.md", "prompts", label)
 
-            # Sync agents
-            agents_src = source_path / "agents"
-            if agents_src.exists():
-                for file_path in agents_src.glob("*.agent.md"):
-                    dest_path = target_path / "agents" / file_path.name
-                    shutil.copy2(file_path, dest_path)
-                    self.logger.info(f"Synced agent ({label}): {file_path.name}")
-
-            # Sync prompts
-            prompts_src = source_path / "prompts"
-            if prompts_src.exists():
-                for file_path in prompts_src.glob("*.prompt.md"):
-                    dest_path = target_path / "prompts" / file_path.name
-                    shutil.copy2(file_path, dest_path)
-                    self.logger.info(f"Synced prompt ({label}): {file_path.name}")
-
-        except OSError as e:
-            raise ADHDError(f"Failed to sync {label} data: {e}") from e
-
-    def _sync_module_instructions_to_target(self, target_path: Path) -> None:
+    def _sync_module_files_to_target(self, target_path: Path, pattern: str, subdir: str, file_type: str) -> None:
         """
-        Scan all modules and copy <module_name>.instructions.md to target/instructions.
+        Scan all modules and copy files matching pattern to target subdirectory.
+        
+        Args:
+            target_path: Target base directory
+            pattern: Glob pattern (e.g., "*.instructions.md")
+            subdir: Target subdirectory (e.g., "instructions")
+            file_type: Human-readable file type for logging (e.g., "instruction")
         """
-        self.logger.info(f"Syncing module instructions to {target_path}...")
+        self.logger.info(f"Syncing module {file_type}s to {target_path}...")
         
         report = self.modules_controller.list_all_modules()
         
         for module in report.modules:
-            candidates = [
-                module.path / f"{module.name}.instructions.md",
-                module.module_type.path / f"{module.name}.instructions.md"
-            ]
-            
-            source_path: Optional[Path] = None
-            for candidate in candidates:
-                if candidate.exists():
-                    source_path = candidate
-                    break
-            
-            if source_path:
-                try:
-                    dest_path = target_path / "instructions" / source_path.name
-                    shutil.copy2(source_path, dest_path)
-                    self.logger.info(f"Synced module instruction: {module.name} -> {dest_path.name}")
-                except OSError as e:
-                    self.logger.error(f"Failed to sync instruction for module {module.name}: {e}")
+            files = list(module.path.glob(pattern))
+            if files:
+                for file_path in files:
+                    try:
+                        dest_path = target_path / subdir / file_path.name
+                        shutil.copy2(file_path, dest_path)
+                        self.logger.info(f"Synced module {file_type}: {module.name} -> {dest_path.name}")
+                    except OSError as e:
+                        self.logger.error(f"Failed to sync {file_type} {file_path.name} for module {module.name}: {e}")
             else:
-                self.logger.debug(f"No instructions found for module {module.name}")
-
-    def _sync_module_agents_to_target(self, target_path: Path) -> None:
-        """
-        Scan all modules and copy *.agent.md files to target/agents.
-        """
-        self.logger.info(f"Syncing module agents to {target_path}...")
-        
-        report = self.modules_controller.list_all_modules()
-        
-        for module in report.modules:
-            for agent_file in module.path.glob("*.agent.md"):
-                try:
-                    dest_path = target_path / "agents" / agent_file.name
-                    shutil.copy2(agent_file, dest_path)
-                    self.logger.info(f"Synced module agent: {module.name} -> {dest_path.name}")
-                except OSError as e:
-                    self.logger.error(f"Failed to sync agent {agent_file.name} for module {module.name}: {e}")
+                self.logger.debug(f"No {file_type}s found for module {module.name}")
 
     def run(self) -> None:
         """Execute the full synchronization process based on config."""
@@ -163,8 +140,9 @@ class InstructionController:
                 self.logger.info(f"Official sync: {self.official_source_path} -> {target_path}")
                 self._ensure_target_structure(target_path)
                 self._sync_data_to_target(self.official_source_path, target_path, "official")
-                self._sync_module_instructions_to_target(target_path)
-                self._sync_module_agents_to_target(target_path)
+                self._sync_module_files_to_target(target_path, "*.instructions.md", "instructions", "instruction")
+                self._sync_module_files_to_target(target_path, "*.agent.md", "agents", "agent")
+                self._sync_module_files_to_target(target_path, "*.prompt.md", "prompts", "prompt")
         else:
             self.logger.info("No official targets configured, skipping official sync.")
         
