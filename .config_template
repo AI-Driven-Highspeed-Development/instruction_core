@@ -1,0 +1,8 @@
+{
+    "module_name": "instruction_core",
+    "path": {
+        "data": "./project/data/instruction_core",
+        "official_target_dir": "./.github",
+        "custom_target_dir": ""
+    }
+}
