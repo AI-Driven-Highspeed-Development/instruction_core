@@ -14,11 +14,11 @@ class InstructionController:
     """
     Controller for managing instruction and agent files.
     
-    Supports two sync modes via config:
-    - official_target_dir: Syncs from cores/instruction_core/data to specified target
-    - custom_target_dir: Syncs from ./project/data/instruction_core (or config path) to specified target
+    Supports two sync modes via config (both accept lists of target directories):
+    - official_target_dir: List of paths. Syncs from cores/instruction_core/data to each target
+    - custom_target_dir: List of paths. Syncs from ./project/data/instruction_core (or config path) to each target
     
-    If a target dir is empty string, that sync is skipped.
+    Empty lists or empty strings within lists are skipped.
     """
 
     def __init__(self, root_path: Optional[Path] = None, logger: Optional[Logger] = None):
@@ -37,12 +37,21 @@ class InstructionController:
         custom_data_path = self.config.path.data if hasattr(self.config.path, 'data') else "./project/data/instruction_core"
         self.custom_source_path = (self.root_path / custom_data_path).resolve()
         
-        # Target directories from config
-        official_target = getattr(self.config.path, 'official_target_dir', './.github')
-        custom_target = getattr(self.config.path, 'custom_target_dir', '')
+        # Target directories from config (now lists)
+        official_targets = getattr(self.config.path, 'official_target_dir', ['./.github'])
+        custom_targets = getattr(self.config.path, 'custom_target_dir', [])
         
-        self.official_target_path = (self.root_path / official_target).resolve() if official_target else None
-        self.custom_target_path = (self.root_path / custom_target).resolve() if custom_target else None
+        # Convert to lists of resolved paths, filtering out empty strings
+        self.official_target_paths = [
+            (self.root_path / target).resolve() 
+            for target in (official_targets if isinstance(official_targets, list) else [official_targets])
+            if target
+        ]
+        self.custom_target_paths = [
+            (self.root_path / target).resolve()
+            for target in (custom_targets if isinstance(custom_targets, list) else [custom_targets])
+            if target
+        ]
 
     def _ensure_target_structure(self, target_path: Path) -> None:
         """Ensure instructions, agents, and prompts directories exist under target path."""
@@ -148,22 +157,24 @@ class InstructionController:
         """Execute the full synchronization process based on config."""
         self.logger.info("Starting instruction synchronization...")
         
-        # Sync official source to official target (if configured)
-        if self.official_target_path:
-            self.logger.info(f"Official sync: {self.official_source_path} -> {self.official_target_path}")
-            self._ensure_target_structure(self.official_target_path)
-            self._sync_data_to_target(self.official_source_path, self.official_target_path, "official")
-            self._sync_module_instructions_to_target(self.official_target_path)
-            self._sync_module_agents_to_target(self.official_target_path)
+        # Sync official source to all official targets
+        if self.official_target_paths:
+            for target_path in self.official_target_paths:
+                self.logger.info(f"Official sync: {self.official_source_path} -> {target_path}")
+                self._ensure_target_structure(target_path)
+                self._sync_data_to_target(self.official_source_path, target_path, "official")
+                self._sync_module_instructions_to_target(target_path)
+                self._sync_module_agents_to_target(target_path)
         else:
-            self.logger.info("Official target not configured, skipping official sync.")
+            self.logger.info("No official targets configured, skipping official sync.")
         
-        # Sync custom source to custom target (if configured)
-        if self.custom_target_path:
-            self.logger.info(f"Custom sync: {self.custom_source_path} -> {self.custom_target_path}")
-            self._ensure_target_structure(self.custom_target_path)
-            self._sync_data_to_target(self.custom_source_path, self.custom_target_path, "custom")
+        # Sync custom source to all custom targets
+        if self.custom_target_paths:
+            for target_path in self.custom_target_paths:
+                self.logger.info(f"Custom sync: {self.custom_source_path} -> {target_path}")
+                self._ensure_target_structure(target_path)
+                self._sync_data_to_target(self.custom_source_path, target_path, "custom")
         else:
-            self.logger.info("Custom target not configured, skipping custom sync.")
+            self.logger.info("No custom targets configured, skipping custom sync.")
         
         self.logger.info("Instruction synchronization completed.")
