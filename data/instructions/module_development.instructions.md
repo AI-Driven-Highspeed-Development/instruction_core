@@ -42,37 +42,21 @@ sys.path.insert(0, project_root)
 4. **NEVER use print() in MCP servers**: Corrupts JSON-RPC. Use `Logger` from `logger_util`.
 5. **NEVER hardcode paths**: Use `ConfigManager` for paths.
 
-## MCP-Specific Rules
+## Module File Structure
+Every module MUST include these core files:
 
-### File Structure
-```
-mcps/<module_name>/
-├── __init__.py           # Exports + path setup
-├── init.yaml             # Module metadata
-├── <name>_mcp.py         # FastMCP server (thin wrapper ONLY)
-├── <name>_controller.py  # ALL business logic here
-├── <name>_cli.py         # CLI command registration
-├── refresh.py            # Registers in .vscode/mcp.json
-└── requirements.txt      # PyPI deps
-```
+| File | Purpose |
+|:---|:---|
+| `__init__.py` | Exports, path setup, auto-refresh triggers |
+| `init.yaml` | Module metadata: name, version, description, requirements |
+| `refresh.py` | Re-runnable setup logic (register configs, CLI, etc.) |
+| `README.md` | Human-readable documentation |
+| `.config_template` | Default config schema (optional) |
+| `requirements.txt` | PyPI dependencies ONLY (not ADHD modules) |
+| `<name>.instructions.md` | AI context for this module (optional but recommended) |
+| `data/` | Module-specific data files (optional) |
 
-### CLI Registration (`*_cli.py`)
-- Import pattern: `from managers.cli_manager import CLIManager, ModuleRegistration, Command, CommandArg`
-- Handler signature: `def handler_name(args: argparse.Namespace) -> int:`
-- Handler path: `"mcps.<module>.<base>_cli:<function_name>"`
-- Use `_get_controller()` singleton pattern for controller access.
-- Return `int` (0 = success, non-zero = error).
-
-### Controller Pattern (`*_controller.py`)
-- Class-based: `class <Name>Controller:`
-- Constructor: `def __init__(self, workspace_root: str | Path | None = None):`
-- Methods return: `dict[str, Any]` with `{"success": bool, ...}` pattern.
-- Logging: `from utils.logger_util import Logger`
-
-### MCP Server (`*_mcp.py`)
-- Keep tools under 10 lines—delegate to controller.
-- Docstrings are mandatory (become tool descriptions).
-- Use `snake_case` for tool names.
+**NOTE**: `data/` is for module repo data ONLY (will push to repo). Use `path` in `.config` for project-specific data, conventionally under `project/data/<module_name>/`.
 
 ## Verification Checklist
 Before marking module work complete:

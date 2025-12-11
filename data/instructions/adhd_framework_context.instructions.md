@@ -74,41 +74,6 @@ Generic module: external_media_manager (scanning, indexing)
 Used by --> anime_library_scanner  or  photo_library_scanner (Project: domain parsing)
 ```
 
-## Module File Structure
-Every module MUST include these core files:
-
-| File | Purpose |
-|:---|:---|
-| `__init__.py` | Exports, path setup (see below), auto-refresh triggers |
-| `init.yaml` | Module metadata: name, version, description, requirements |
-| `refresh.py` | Re-runnable setup logic (register configs, CLI, etc.) |
-| `README.md` | Human-readable documentation |
-| `.config_template` | Default config schema (optional) |
-| `requirements.txt` | PyPI dependencies ONLY (not ADHD modules) |
-| `<name>.instructions.md` | AI context for this module (optional but recommended) |
-| `data/` | Module-specific data files (optional) |
-
-**NOTE**: `data/` is for module repo data ONLY (will push to repo). Use `path` in `.config` for project specific data, conventionally under `project/data/<module_name>/`.
-
-### Path Handling in `__init__.py` and `refresh.py`
-ALWAYS include at the top of `__init__.py` and `refresh.py`:
-```python
-import os
-import sys
-
-current_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.getcwd()  # Use current working directory as project root
-sys.path.insert(0, project_root)
-```
-This ensures modules work correctly regardless of how they are invoked.
-
-### MCP-Specific Files (for `mcps/` only)
-| File | Purpose |
-|:---|:---|
-| `<name>_mcp.py` | FastMCP server: tool decorators ONLY (thin wrapper) |
-| `<name>_controller.py` | All business logic, file I/O, validation |
-| `<name>_cli.py` | CLI command registration (mirrors MCP tools) |
-
 ## AI-Native Context System
 `instruction_core` syncs to `.github/` for VS Code Copilot:
 - **Source**: `cores/instruction_core/data/`, `<module>/<name>.instructions.md`

@@ -60,16 +60,23 @@ if __name__ == "__main__":
 - Use `Logger` from `utils.logger_util` for logging.
 - Provide module-level `get_<name>_controller()` singleton function.
 
-### 5. **Logging**: NEVER use `print()` in STDIO-based MCP servers—corrupts JSON-RPC. Use:
+### 5. **CLI Registration** (`*_cli.py`):
+- Import: `from managers.cli_manager import CLIManager, ModuleRegistration, Command, CommandArg`
+- Handler signature: `def handler_name(args: argparse.Namespace) -> int:`
+- Handler path: `"mcps.<module>.<base>_cli:<function_name>"`
+- Use `_get_controller()` singleton pattern for controller access.
+- Return `int` (0 = success, non-zero = error).
+
+### 6. **Logging**: NEVER use `print()` in STDIO-based MCP servers—corrupts JSON-RPC. Use:
 ```python
 from utils.logger_util import Logger
 log = Logger(name="<ControllerName>", verbose=False)
 log.info("Safe logging to stderr")
 ```
 
-### 6. **Tool Naming**: Follow MCP spec—use `snake_case` for tool names.
+### 7. **Tool Naming**: Follow MCP spec—use `snake_case` for tool names.
 
-### 7. **Docstrings**: Required for every tool. FastMCP auto-generates schema from:
+### 8. **Docstrings**: Required for every tool. FastMCP auto-generates schema from:
 - Function docstring → tool description
 - Type hints → argument types
 - Docstring `Args:` section → argument descriptions
