@@ -88,6 +88,8 @@ Every module MUST include these core files:
 | `<name>.instructions.md` | AI context for this module (optional but recommended) |
 | `data/` | Module-specific data files (optional) |
 
+**NOTE**: `data/` is for module repo data ONLY (will push to repo). Use `path` in `.config` for project specific data, conventionally under `project/data/<module_name>/`.
+
 ### Path Handling in `__init__.py` and `refresh.py`
 ALWAYS include at the top of `__init__.py` and `refresh.py`:
 ```python
