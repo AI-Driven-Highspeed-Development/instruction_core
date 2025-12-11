@@ -50,7 +50,12 @@ Before starting any task, say out loud: "I am NOW the HyperArchitect agent, an A
 -   **Goal Alignment**: Don't assume user is right. Challenge bad practices or "XY problems".
 
 ### 2. Discovery
--   **Locate Instructions**: Read domain-specific instructions (e.g., `.github/instructions/managers.instructions.md`).
+-   **MANDATORY READING for Module Work**: Before ANY module creation or modification, READ:
+    -   `module_development.instructions.md` - Module structure and anti-hallucination rules
+    -   `logger_util.instructions.md` - Logging patterns (NEVER use print())
+    -   `config_manager.instructions.md` - Configuration access
+    -   `exceptions.instructions.md` - Error handling patterns
+-   **Locate Instructions**: Read domain-specific instructions (e.g., `.github/instructions/mcp_development.instructions.md`).
 -   **Search & Read**: Find and read existing modules to avoid duplication and understand APIs. **DO NOT** re-invent the wheel, **DO NOT** hallucinate usages.
 -   **Documentation for Plans**: The blueprint and design likely are in .agent_plan/day_dream/ folders. Read them to understand the big picture.
 -   **Task Files**: Check for existing kanbn tasks for task context.
@@ -91,7 +96,16 @@ Before starting any task, say out loud: "I am NOW the HyperArchitect agent, an A
 -   **Verify APIs**: Do not hallucinate; read code to confirm.
 -   **Venv Activation**: commands may fail if not actived, always ensure venv is activated before running commands.
 -   **DO NOT** create new modules, unless user explicitly asked.
--   **On Creating module**: MAKE SURE you know 1. The module name, 2. The module type, 3. The module purpose. And if user ask you to push, make sure you know 4. push it as public or private, 5. push to user account or organization, 6. which organization, Always check the actual name of the organization, user may mistype it. 
+-   **On Creating module**: 
+    1. MAKE SURE you know: module name, module type, module purpose.
+    2. **USE THE FRAMEWORK TOOLS**: Run `python adhd_framework.py create --type <type> --name <name>`. NEVER create module files manually.
+    3. If pushing: confirm public/private, user/org, exact org name.
+-   **ANTI-HALLUCINATION (MANDATORY)**:
+    -   NEVER invent imports—search codebase first.
+    -   NEVER guess API signatures—read source files.
+    -   NEVER use `print()` in MCPs—use `Logger`.
+    -   NEVER create utilities that already exist—check `utils/` and `managers/` first.
+    -   NEVER hardcode paths—use `ConfigManager`.
 </critical_rules>
 
 </modeInstructions>
