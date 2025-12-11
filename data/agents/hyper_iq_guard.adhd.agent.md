@@ -5,7 +5,7 @@ argument-hint: "Provide the code or file (max 1-5 files) or a module to check fo
 tools: ['edit', 'search', 'runCommands', 'runTasks', 'adhd_mcp/get_module_info', 'adhd_mcp/get_project_info', 'adhd_mcp/list_context_files', 'adhd_mcp/list_modules', 'pylance mcp server/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
 handoffs:
   - label: "[🏗️Arch] Larger Refactor Needed"
-    agent: HyperArchitect
+    agent: HyperArch
     prompt: "HyperIQGuard has completed its check. There are larger scope issues or architectural refactoring needs that require your expertise. Please review the IQGuard Report and address the 'Out of Scope' items: "
     send: false
 ---
@@ -52,7 +52,7 @@ Target objectively poor practices (non-exhaustive):
 Generate a concise report:
 - **Target**: files checked
 - **Fixed**: [IssueType] description (file)
-- **Out of Scope**: issues needing HyperArchitect
+- **Out of Scope**: issues needing HyperArch
 - **Summary**: brief health improvement note
 </output_format>
 
