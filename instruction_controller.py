@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import json
+import re
 import shutil
 from pathlib import Path
 from typing import Optional
+
+import yaml
 
 from cores.exceptions_core.adhd_exceptions import ADHDError
 from cores.modules_controller_core.modules_controller import ModulesController
@@ -52,6 +56,12 @@ class InstructionController:
             for target in (custom_targets if isinstance(custom_targets, list) else [custom_targets])
             if target
         ]
+        
+        # MCP permission injection JSON path
+        mcp_injection_path = self.config.path.dict_get("mcp_permission_injection_json")
+        self.mcp_permission_injection_path = (
+            (self.root_path / mcp_injection_path).resolve() if mcp_injection_path else None
+        )
 
     def _ensure_target_structure(self, target_path: Path) -> None:
         """Ensure instructions, agents, and prompts directories exist under target path."""
@@ -62,6 +72,143 @@ class InstructionController:
             self.logger.info(f"Ensured target structure exists at {target_path}")
         except OSError as e:
             raise ADHDError(f"Failed to create target structure at {target_path}: {e}") from e
+
+    def _load_mcp_permissions(self) -> dict[str, list[str]]:
+        """Load MCP permission injection configuration from JSON file."""
+        if not self.mcp_permission_injection_path:
+            self.logger.debug("No MCP permission injection path configured.")
+            return {}
+        
+        if not self.mcp_permission_injection_path.exists():
+            self.logger.debug(f"MCP permission injection file not found: {self.mcp_permission_injection_path}")
+            return {}
+        
+        try:
+            content = self.mcp_permission_injection_path.read_text(encoding="utf-8").strip()
+            if not content:
+                self.logger.debug("MCP permission injection file is empty.")
+                return {}
+            
+            permissions = json.loads(content)
+            if not isinstance(permissions, dict):
+                self.logger.warning("MCP permission injection file must contain a JSON object.")
+                return {}
+            
+            self.logger.info(f"Loaded MCP permissions for {len(permissions)} agent(s).")
+            return permissions
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Failed to parse MCP permission injection JSON: {e}")
+            return {}
+        except OSError as e:
+            self.logger.error(f"Failed to read MCP permission injection file: {e}")
+            return {}
+
+    def _inject_mcp_permissions_to_agent(self, agent_file: Path, additional_tools: list[str]) -> None:
+        """
+        Inject additional MCP tools into an agent file's YAML header.
+        
+        Uses regex to modify only the tools line, preserving all other YAML formatting.
+        
+        Args:
+            agent_file: Path to the agent file in the target directory
+            additional_tools: List of tool strings to add
+        """
+        if not additional_tools:
+            return
+        
+        try:
+            content = agent_file.read_text(encoding="utf-8")
+        except OSError as e:
+            self.logger.error(f"Failed to read agent file {agent_file.name}: {e}")
+            return
+        
+        # Extract YAML header between --- markers
+        header_match = re.match(r"^---\n(.*?)\n---", content, re.DOTALL)
+        if not header_match:
+            self.logger.warning(f"No YAML header found in {agent_file.name}, skipping injection.")
+            return
+        
+        header_text = header_match.group(1)
+        
+        # Parse header just to get existing tools (for deduplication)
+        try:
+            header = yaml.safe_load(header_text)
+            if not isinstance(header, dict):
+                self.logger.warning(f"Invalid YAML header in {agent_file.name}, skipping injection.")
+                return
+        except yaml.YAMLError as e:
+            self.logger.error(f"Failed to parse YAML header in {agent_file.name}: {e}")
+            return
+        
+        # Get existing tools for deduplication
+        existing_tools = header.get("tools", [])
+        if not isinstance(existing_tools, list):
+            existing_tools = [existing_tools] if existing_tools else []
+        existing_set = set(existing_tools)
+        
+        # Filter out duplicates from additional_tools
+        new_tools = [t for t in additional_tools if t not in existing_set]
+        if not new_tools:
+            self.logger.debug(f"No new tools to inject into {agent_file.name}, all already present.")
+            return
+        
+        # Build the new tools string to append (quoted, comma-separated)
+        new_tools_str = ", ".join(f"'{t}'" for t in new_tools)
+        
+        # Use regex to find and modify the tools line ONLY in the header section
+        # Match tools: [...] pattern (single line, may have trailing content)
+        tools_pattern = r"(tools:\s*\[)([^\]]*?)(\])"
+        
+        def replace_tools(match: re.Match) -> str:
+            prefix = match.group(1)  # "tools: ["
+            existing = match.group(2).rstrip()  # existing tools content
+            suffix = match.group(3)  # "]"
+            
+            if existing:
+                # Append to existing tools
+                return f"{prefix}{existing}, {new_tools_str}{suffix}"
+            else:
+                # Empty tools list
+                return f"{prefix}{new_tools_str}{suffix}"
+        
+        # Apply regex only to header section, then reconstruct full content
+        new_header_text, count = re.subn(tools_pattern, replace_tools, header_text, count=1)
+        
+        if count == 0:
+            self.logger.warning(f"Could not find tools line in {agent_file.name}, skipping injection.")
+            return
+        
+        # Reconstruct full file content with modified header
+        rest_of_file = content[header_match.end():]
+        new_content = f"---\n{new_header_text}\n---{rest_of_file}"
+        
+        try:
+            agent_file.write_text(new_content, encoding="utf-8")
+            self.logger.info(f"Injected {len(new_tools)} MCP permission(s) into {agent_file.name}")
+        except OSError as e:
+            self.logger.error(f"Failed to write agent file {agent_file.name}: {e}")
+
+    def _apply_mcp_injection_to_agents(self, target_path: Path) -> None:
+        """Apply MCP permission injection to all agent files in target directory."""
+        permissions = self._load_mcp_permissions()
+        if not permissions:
+            return
+        
+        agents_dir = target_path / "agents"
+        if not agents_dir.exists():
+            self.logger.debug(f"Agents directory not found: {agents_dir}")
+            return
+        
+        for agent_file in agents_dir.glob("*.agent.md"):
+            # Extract agent key from filename: hyper_architect.adhd.agent.md -> hyper_architect
+            agent_key = agent_file.stem.replace(".adhd.agent", "").replace(".agent", "")
+            
+            if agent_key in permissions:
+                additional_tools = permissions[agent_key]
+                if isinstance(additional_tools, list):
+                    self._inject_mcp_permissions_to_agent(agent_file, additional_tools)
+                else:
+                    self.logger.warning(f"Invalid tools format for agent '{agent_key}', expected list.")
 
     def _sync_files_by_pattern(self, source_dir: Path, target_dir: Path, pattern: str, subdir: str, label: str) -> None:
         """
@@ -143,6 +290,8 @@ class InstructionController:
                 self._sync_module_files_to_target(target_path, "*.instructions.md", "instructions", "instruction")
                 self._sync_module_files_to_target(target_path, "*.agent.md", "agents", "agent")
                 self._sync_module_files_to_target(target_path, "*.prompt.md", "prompts", "prompt")
+                # Apply MCP permission injection to copied agents
+                self._apply_mcp_injection_to_agents(target_path)
         else:
             self.logger.info("No official targets configured, skipping official sync.")
         
@@ -152,6 +301,8 @@ class InstructionController:
                 self.logger.info(f"Custom sync: {self.custom_source_path} -> {target_path}")
                 self._ensure_target_structure(target_path)
                 self._sync_data_to_target(self.custom_source_path, target_path, "custom")
+                # Apply MCP permission injection to copied agents (custom targets may have agents too)
+                self._apply_mcp_injection_to_agents(target_path)
         else:
             self.logger.info("No custom targets configured, skipping custom sync.")
         

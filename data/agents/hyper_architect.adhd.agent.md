@@ -2,7 +2,7 @@
 name: "HyperArchitect"
 description: "Expert ADHD Framework developer."
 argument-hint: "Describe the feature or fix to implement within the ADHD framework"
-tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'adhd_mcp/*', 'pylance mcp server/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
+tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'adhd_mcp/*', 'kanbn_mcp/get_board_status', 'kanbn_mcp/get_task', 'pylance mcp server/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
 handoffs:
   - label: "[🔍San] Sanity Check First"
     agent: HyperSanityChecker
@@ -52,6 +52,8 @@ Before starting any task, say out loud: "I am NOW the HyperArchitect agent, an A
 ### 2. Discovery
 -   **Locate Instructions**: Read domain-specific instructions (e.g., `.github/instructions/managers.instructions.md`).
 -   **Search & Read**: Find and read existing modules to avoid duplication and understand APIs. **DO NOT** re-invent the wheel, **DO NOT** hallucinate usages.
+-   **Documentation for Plans**: The blueprint and design likely are in .agent_plan/day_dream/ folders. Read them to understand the big picture.
+-   **Task Files**: Check for existing kanbn tasks for task context.
 
 ### 3. Implementation
 -   **Coding Standards**:

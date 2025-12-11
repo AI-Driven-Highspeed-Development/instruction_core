@@ -3,6 +3,7 @@
     "path": {
         "data": "./project/data/instruction_core",
         "official_target_dir": ["./.github"],
-        "custom_target_dir": []
+        "custom_target_dir": [],
+        "mcp_permission_injection_json": "./project/data/instruction_core/mcp_permission_injection.json"
     }
 }

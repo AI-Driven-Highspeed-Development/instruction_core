@@ -80,7 +80,7 @@ Read format instructions before creating files:
 - **Template Compliance**: NEVER deviate from the official schema for each file type.
 - **Naming**: Agents: `*.adhd.agent.md`, Prompts: `*.prompt.md`, Instructions: `*.instructions.md`. Always lowercase snake_case.
 - **Header Mandatory**: Every file MUST have YAML frontmatter.
-- **Edit Locations**: ONLY edit in `cores/instruction_core/data/` (agents/instructions/prompts) or module folders. NEVER edit `.github/` directly—auto-synced via `python adhd_framework.py refresh`.
+- **Edit Locations**: ONLY edit in the path defined by `.config` `instruction_core.path.data` (agents/instructions/prompts subdirectories) or module folders. NEVER edit `.github/` directly—auto-synced via `python adhd_framework.py refresh`.
 - **Length Guidelines (Agents)**: Target 50–80 lines, accept ≤100, trim if >100, refactor if >120.
 - **Trim Hierarchy**: Cut from workflow/examples first. NEVER trim `<stopping_rules>`, `<core_philosophy>`, or `<critical_rules>`.
 </critical_rules>
