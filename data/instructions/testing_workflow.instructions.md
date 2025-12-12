@@ -1,7 +1,3 @@
----
-applyTo: "**/*.agent.md"
----
-
 # HyperArch Testing Workflow
 
 ## Goals
