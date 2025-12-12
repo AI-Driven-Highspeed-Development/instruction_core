@@ -98,6 +98,13 @@ Read `testing_workflow.instructions.md` and follow it **EXACTLY**:
 3.  Every 3-4 cycles, DELEGATE to HyperIQGuard for housekeeping
 4.  Final gate: HyperIQGuard cleanup + HyperSan approval required
 
+### 3C. General Branch (Analysis, Discussion, Planning)
+For tasks that don't involve code changes:
+1.  **Gather Context**: Search and read relevant files to understand the current state
+2.  **Analyze**: Provide insights, explanations, or recommendations
+3.  **Delegate if Needed**: Vision/planning → HyperDream, Instructions → HyperAgentSmith, Task planning → HyperPM
+4.  **No Edits**: This branch is read-only. If implementation is needed, switch to Branch A.
+
 </workflow>
 
 <critical_rules>
