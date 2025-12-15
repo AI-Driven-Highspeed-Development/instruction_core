@@ -35,8 +35,8 @@ Create a JSON file at the configured `mcp_permission_injection_json` path:
 
 ```json
 {
-    "hyper_architect": ["unity_mcp/*", "custom_tool"],
-    "hyper_san_checker": ["unity_mcp/some_tool"]
+    "hyper_architect": ["unity_adhd_mcp/*", "custom_tool"],
+    "hyper_san_checker": ["unity_adhd_mcp/some_tool"]
 }
 ```
 
