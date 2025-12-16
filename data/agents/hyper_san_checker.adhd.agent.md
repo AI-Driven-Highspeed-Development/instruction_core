@@ -2,7 +2,7 @@
 name: "HyperSan"
 description: 'Checking user queries for basic sanity before passing them to other agents.'
 argument-hint: "Describe the plan or request to validate"
-tools: ['search', 'adhd_mcp/get_module_info', 'adhd_mcp/get_project_info', 'adhd_mcp/list_context_files', 'adhd_mcp/list_modules', 'pylance mcp server/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'extensions']
+tools: ['vscode/openSimpleBrowser', 'vscode/vscodeAPI', 'vscode/extensions', 'read/problems', 'read/readFile', 'search', 'web', 'adhd_mcp/get_module_info', 'adhd_mcp/get_project_info', 'adhd_mcp/list_context_files', 'adhd_mcp/list_modules', 'agent', 'ms-python.python/getPythonEnvironmentInfo']
 handoffs:
   - label: "[📋PM] Create Tasks"
     agent: HyperPM

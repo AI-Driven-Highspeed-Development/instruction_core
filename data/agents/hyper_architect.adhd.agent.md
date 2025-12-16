@@ -2,7 +2,7 @@
 name: "HyperArch"
 description: "Expert ADHD Framework developer."
 argument-hint: "Describe the feature or fix to implement within the ADHD framework"
-tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'adhd_mcp/*', 'kanbn_mcp/get_board_status', 'kanbn_mcp/get_task', 'pylance mcp server/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'extensions', 'todos', 'runSubagent']
+tools: ['edit', 'search', 'vscode/getProjectSetupInfo', 'vscode/installExtension', 'vscode/newWorkspace', 'vscode/runCommand', 'execute/getTerminalOutput', 'execute/runInTerminal', 'read/terminalLastCommand', 'read/terminalSelection', 'execute/createAndRunTask', 'execute/getTaskOutput', 'execute/runTask', 'adhd_mcp/*', 'kanbn_mcp/get_board_status', 'kanbn_mcp/get_task', 'pylance mcp server/*', 'search/usages', 'vscode/vscodeAPI', 'read/problems', 'search/changes', 'vscode/openSimpleBrowser', 'web/fetch', 'web/githubRepo', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'vscode/extensions', 'todo', 'agent']
 handoffs:
   - label: "[🔍San] Sanity Check First"
     agent: HyperSan
