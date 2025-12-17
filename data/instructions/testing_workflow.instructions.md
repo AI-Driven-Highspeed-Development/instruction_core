@@ -2,7 +2,7 @@
 
 ## Goals
 - Define a structured, iterative testing loop for HyperArch.
-- Ensure comprehensive bug detection and resolution through repeated validation cycles.
+- Ensure comprehensive bug detection through spec tests AND adversarial attacks.
 - Maintain code quality through strategic housekeeping checkpoints.
 
 ## When This Applies
@@ -14,13 +14,16 @@ This workflow applies when the user requests:
 
 ## The Testing Loop
 
-The testing workflow is an **iterative cycle** that continues until all bugs are resolved:
+The testing workflow has **two phases**: Specification Testing and Adversarial Testing.
 
-**Core Loop**: Test Plan (HyperArch) → Check Plan (HyperSan) → Do Test (HyperArch) → Run & Observe (HyperArch) → Check Test (HyperSan) → Fix Bugs (HyperArch) → [REPEAT]
+**Phase A (Spec Tests)**: Test Plan → HyperSan Check → Execute → Fix → Repeat until pass
+**Phase B (Attack Tests)**: DELEGATE to HyperRed → Fix findings → Repeat until pass
 
 **Branch Conditions**:
-- Bugs remain? → Loop back to "Do Test"
-- All fixed? → Proceed to Finalization
+- Spec tests failing? → Loop Phase A
+- Spec tests pass? → Proceed to Phase B (HyperRed)
+- HyperRed finds blockers? → Fix, re-run HyperRed
+- All clear? → Finalization
 - Every 3-4 cycles → Call HyperIQGuard for housekeeping
 
 ## Workflow Steps
@@ -36,11 +39,11 @@ The testing workflow is an **iterative cycle** that continues until all bugs are
    - Use `runSubagent` with prompt: "Review this test plan for completeness and feasibility: [plan details]"
    - Parse response. If issues found, revise plan before proceeding.
 
-### Phase 2: Test Execution Loop
-Repeat until all tests pass:
+### Phase 2: Specification Test Loop
+Repeat until all spec tests pass:
 
 1. **HyperArch** executes tests:
-   - **Say out loud**: "Starting test cycle #[N]" to track progress
+   - **Say out loud**: "Starting spec test cycle #[N]" to track progress
    - Run the test cases (terminal commands, manual verification)
    - Capture output, errors, and unexpected behavior
    - Document each result clearly
@@ -57,7 +60,25 @@ Repeat until all tests pass:
 
 4. **Loop back**: Return to step 1 of this phase (increment cycle counter)
 
-### Phase 3: Housekeeping Checkpoints
+### Phase 3: Adversarial Testing (After Spec Tests Pass)
+Once spec tests pass, engage HyperRed:
+
+1. **DELEGATE to HyperRed**:
+   - Use `runSubagent` with prompt: "Attack this module for edge cases and boundary conditions: [module path]"
+   - HyperRed reads `init.yaml` scope, generates attacks, reports findings
+
+2. **Interpret Results**:
+   - `BLOCKER` findings → MUST fix before release
+   - `WARNING` findings → Should fix, prioritize
+   - `INFO` findings → Acknowledge, defer if needed
+   - Out-of-scope notes → Document for future consideration
+
+3. **Fix In-Scope Issues**:
+   - HyperArch fixes BLOCKER and WARNING issues
+   - Re-run HyperRed to verify fixes
+   - Repeat until no BLOCKER findings remain
+
+### Phase 4: Housekeeping Checkpoints
 **Every 3-4 test cycles**, or when significant fixes accumulate:
 
 1. **DELEGATE to HyperIQGuard**:
@@ -66,8 +87,8 @@ Repeat until all tests pass:
 
 2. Continue testing loop after housekeeping
 
-### Phase 4: Finalization
-When all tests pass consistently:
+### Phase 5: Finalization
+When all tests pass and HyperRed finds no blockers:
 
 1. **DELEGATE to HyperIQGuard** for final cleanup:
    - Full code quality review of all modified files
@@ -82,17 +103,20 @@ When all tests pass consistently:
 ## Critical Rules
 
 - **NEVER skip HyperSan checks**. Every test result MUST be reviewed.
+- **NEVER skip HyperRed**. After spec tests pass, adversarial testing is MANDATORY.
 - **NEVER declare "done" without final HyperSan approval**.
 - **Track iteration count**. If >10 cycles without resolution, stop and reassess approach.
 - **Minimal fixes only**. Do not refactor unrelated code during bug fixes.
 - **One bug at a time**. Fix, verify, then move to next.
+- **Respect HyperRed scope**. Do not dismiss out-of-scope findings—document them for future.
 
 ## Exit Conditions
 
 The testing loop ends when:
-1. All defined test cases pass
-2. HyperSan confirms `passed: true` on final check
-3. HyperIQGuard confirms no critical issues remain
+1. All defined spec test cases pass
+2. HyperRed finds no BLOCKER issues (WARNINGs acceptable if acknowledged)
+3. HyperSan confirms `passed: true` on final check
+4. HyperIQGuard confirms no critical issues remain
 
 OR when:
 - User explicitly says to stop

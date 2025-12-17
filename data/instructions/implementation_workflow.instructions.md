@@ -75,7 +75,8 @@ This workflow applies when the user requests:
 
 ### Phase 4: Finalization
 1. **Document Changes**: Update relevant docs (e.g., README.md)
-2. **Suggest Next Steps**: Further improvements or tests
+2. **Adversarial Testing** (if applicable): For significant changes, suggest running HyperRed
+3. **Suggest Next Steps**: Further improvements or tests
 
 ## Critical Rules
 

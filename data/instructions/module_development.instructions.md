@@ -48,13 +48,15 @@ Every module MUST include these core files:
 | File | Purpose |
 |:---|:---|
 | `__init__.py` | Exports, path setup, auto-refresh triggers |
-| `init.yaml` | Module metadata: name, version, description, requirements |
+| `init.yaml` | Module metadata: name, version, description, requirements, testing scope |
 | `refresh.py` | Re-runnable setup logic (register configs, CLI, etc.) |
 | `README.md` | Human-readable documentation |
 | `.config_template` | Default config schema (optional) |
 | `requirements.txt` | PyPI dependencies ONLY (not ADHD modules) |
 | `<name>.instructions.md` | AI context for this module (optional but recommended) |
 | `data/` | Module-specific data files (optional) |
+| `tests/` | Unit tests for this module (optional, recommended for >200 LOC) |
+| `playground/` | Interactive exploration scripts (optional) |
 
 **NOTE**: `data/` is for module repo data ONLY (will push to repo). Use `path` in `.config` for project-specific data, conventionally under `project/data/<module_name>/`.
 

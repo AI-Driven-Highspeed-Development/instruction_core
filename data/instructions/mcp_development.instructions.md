@@ -19,7 +19,9 @@ mcps/<module_name>/
 ├── <name>_mcp.py         # FastMCP server: tool decorators ONLY
 ├── <name>_controller.py  # Business logic: all implementation here
 ├── refresh.py            # Optional: module refresh logic
-└── requirements.txt      # MCP-specific dependencies
+├── requirements.txt      # MCP-specific dependencies
+├── tests/                # Unit tests (optional)
+└── playground/           # Interactive exploration (optional)
 ```
 Add additional files as needed (e.g., `models.py`, `helpers.py`, `constants.py`).
 

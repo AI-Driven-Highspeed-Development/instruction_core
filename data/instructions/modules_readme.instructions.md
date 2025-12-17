@@ -92,7 +92,9 @@ Notes
 <folder_name>/
 ├─ __init__.py          # exports
 ├─ <file>.py            # main implementation
-└─ README.md            # this file
+├─ README.md            # this file
+├─ tests/               # unit tests (optional)
+└─ playground/          # exploration scripts (optional)
 ```
 
 ## See also

@@ -27,3 +27,29 @@ applyTo: "cores/**/init.yaml, managers/**/init.yaml, plugins/**/init.yaml, utils
    - `core`, `manager`, `util`, `plugin`, `mcp`.
 
 4. **Requirements**: List of URLs to required ADHD modules (e.g., `https://github.com/AI-Driven-Highspeed-Development/exceptions_core.git`).
+
+5. **Testing Scope** (Optional): Define constraints for HyperRed adversarial testing:
+   ```yaml
+   testing:
+     has_tests: true  # Whether module has tests/ folder (default: false)
+     scope:
+       platforms:
+         - linux
+         - macos
+       python_versions:
+         - "3.10"
+         - "3.11"
+       threat_model: internal  # internal | external | adversarial
+       input_assumptions:
+         - "Inputs are from trusted internal sources"
+       out_of_scope:
+         - "Cross-platform compatibility"
+         - "Performance under extreme load"
+   ```
+   
+   **Threat Model Levels**:
+   - `internal`: Inputs from trusted sources (other modules, config files). Test for programmer mistakes.
+   - `external`: Inputs from untrusted users (CLI, API). Test for accidental bad input.
+   - `adversarial`: Inputs from attackers. Full fuzzing and injection testing.
+   
+   **Default**: If omitted, HyperRed assumes `platforms: [linux, macos]`, `threat_model: internal`.
