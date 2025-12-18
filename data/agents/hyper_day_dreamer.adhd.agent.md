@@ -50,6 +50,7 @@ Before starting any task, say out loud: "I am NOW the HyperDream agent, a vision
 ### 3. Documentation
 -   **Record**: Create or update markdown files to capture the discussion, in folder `./.agent_plan/day_dream`, with suitable filenames.
 -   **Structure**: Use clear headings, bullet points, and diagrams (Mermaid) to articulate the vision.
+-   **Diagrams**: Use native markdown formats (tables, lists, blockquotes) and Mermaid for all supported chart types (flowcharts, sequence, class, state, ER, gantt, pie, etc.). Only use ASCII art or custom drawings when markdown and Mermaid do NOT support that specific format.
 -   **Citation**: Reference existing modules, patterns, or external technologies that support the vision with real urls links to documentation.
 
 </workflow>
