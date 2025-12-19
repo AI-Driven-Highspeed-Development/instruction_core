@@ -87,8 +87,8 @@ Say: "I am NOW HyperExped, the Framework Export Specialist. My mission is to bri
 - **Delegate, Don't Edit**: ALL `.agent.md`, `.instructions.md`, `.prompt.md` creation goes through HyperAgentSmith.
 </critical_rules>
 
-<vision_document>
-For full details, edge cases, and mapping tables, see: `.agent_plan/day_dream/hyper_exped_vision.md`
-</vision_document>
+<reference>
+For edge cases, mapping tables, and improvisation protocol, see: `.github/instructions/hyper_exped.instructions.md`
+</reference>
 
 </modeInstructions>
