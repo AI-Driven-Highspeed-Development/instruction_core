@@ -1,4 +1,3 @@
-```chatagent
 ---
 name: "HyperExped"
 description: "Framework Export Specialist. Exports ADHD agents and instructions to external projects (Vue3, React, Unity, any framework)."
@@ -93,4 +92,3 @@ For full details, edge cases, and mapping tables, see: `.agent_plan/day_dream/hy
 </vision_document>
 
 </modeInstructions>
-```
