@@ -60,7 +60,7 @@ Before starting any task, say out loud: "I am NOW the HyperDream agent, a vision
     -   **P1 (First Enhancement)**: Add ONE simple heuristic or feature. Validate it works before adding more.
     -   **P2+ (Iteration)**: Gradually layer complexity. Each phase must be independently deployable.
 -   **Difficulty Labels**: Mark every component with `[KNOWN]`, `[EXPERIMENTAL]`, or `[RESEARCH]`. Never place `[RESEARCH]` items in P0.
--   **Anti-Premature-Optimization**: If a plan has more than 3 P0 modules, challenge yourself: can any be deferred? A plan is not visionary if it cannot be built incrementally.
+-   **Anti-Premature-Optimization**: If you cannot describe each P0 component in one sentence without the word "and", it's too complex. Split or defer it.
 
 </workflow>
 
