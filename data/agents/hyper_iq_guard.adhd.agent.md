@@ -37,6 +37,8 @@ If the user says "no edit", "discussion only", "don't edit", "read only", or sim
 -   **Max Files**: Limit your operation to 1-5 files (approx. one module size) per request, allow slight overage if user is targeting a single module, which is a natural boundary.
 -   **Reasoning**: Large-scale automated refactoring carries a high risk of introducing subtle bugs or corrupting the codebase without human oversight.
 -   **Action**: If a user requests a check on a large directory or the entire codebase, **REFUSE** and ask them to narrow the scope to specific files or a single module.
+-   **Playground Exclusion**: Do NOT analyze `playground/` folders. These are explicitly "NOT production code" per framework conventions.
+-   **Other Exclusions**: Skip `tests/`, `.agent_plan/`, `.temp_agent_work/` folders.
 </scope_limitations>
 
 <target_issues>

@@ -17,8 +17,10 @@ AI agents hit a **Context Wall** as complexity grows. This framework solves it v
 - **Directories**:
   - `project/`: App code. `project/data/`: App data (use Config-Manager paths).
   - `cores/`, `managers/`, `utils/`, `plugins/`, `mcps/`: Module types.
-  - `tests/`: Project-level integration tests. `playground/`: Project-level exploration.
-  - `.temp_agent_work/`: Agent workspace, MUST clean up after.
+  - `tests/`: Project-level integration tests. `tests/integration/` for cross-module tests.
+  - `playground/`: Project-level exploration, demos, prototypes.
+  - `.temp_agent_work/`: Agent workspace, MUST clean up after. Never commit.
+  - `.agent_plan/`: Agent planning artifacts. `day_dream/` for visions, `red_team/` for HyperRed.
 - **Entry Points**: `adhd_framework.py` (framework CLI), `<app_name>.py` (app).
 - **Module Assets** (`<type>/<name>/`):
   - `__init__.py`, `init.yaml`, `.config_template`, `data/`, `refresh.py`

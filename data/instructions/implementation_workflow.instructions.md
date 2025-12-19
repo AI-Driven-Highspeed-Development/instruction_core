@@ -29,6 +29,13 @@ This workflow applies when the user requests:
    - Read source files to confirm API signatures—do NOT guess
    - Check `utils/` and `managers/` for existing utilities
 
+3. **Pre-Implementation Test Cases** (Optional but Recommended):
+   If writing tests BEFORE implementation (TDD-style):
+   - Create placeholder tests in `<module>/tests/test_<feature>.py`
+   - Mark with `@pytest.mark.skip(reason="Not yet implemented")`
+   - Remove skip marker after implementation complete
+   - **Location**: Test cases belong in `<module>/tests/` NOT in `.temp_agent_work/`
+
 ### Phase 2: Coding Standards
 **Structure**:
 - OOP, Type Hints always

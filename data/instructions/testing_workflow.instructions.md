@@ -121,3 +121,20 @@ The testing loop ends when:
 OR when:
 - User explicitly says to stop
 - >10 cycles without progress (escalate to user)
+
+## Testing Folder Guidelines
+
+See `testing_folders.instructions.md` for full decision tree.
+
+### Quick Reference
+| Artifact | Location |
+|----------|----------|
+| Scratch test scripts | `.temp_agent_work/` (clean up after) |
+| HyperRed attacks | `.agent_plan/red_team/<module>/` |
+| Formal unit tests | `<module>/tests/` |
+| Integration tests | `tests/integration/` |
+
+### Before Creating Test Files
+1. **Check existing tests**: Search `<module>/tests/` and `tests/integration/` first
+2. **Check HyperRed findings**: Look at `.agent_plan/red_team/<module>/findings/`
+3. **Reuse before creating**: Don't duplicate existing test coverage
