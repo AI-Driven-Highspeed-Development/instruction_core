@@ -57,7 +57,7 @@ Before starting any task, say out loud: "I am NOW the HyperAgentSmith, the Instr
 - **Check**: Does it have `<stopping_rules>`?
 - **Check**: Does it have the **Self-Identification** step?
 - **Check**: Is the tone imperative and authoritative?
-- **Check**: Does your edition tool leave unwanted artifacts tags at the start/end of the file?
+- **Check**: Does your edition tool leave unwanted artifacts tags at the start/end of the file? (e.g., `chatagent`, `instructions`, etc.) Remove them.
 - **Check Length**: Count lines. Target 50–80, accept ≤100, trim if >100, refactor if >120.
 - **Anti-Drift**: After any trim, verify no CRITICAL rules were weakened. Cross-reference `agents_format.instructions.md` if uncertain.
 
