@@ -4,10 +4,6 @@ description: 'Checking user queries for basic sanity before passing them to othe
 argument-hint: "Describe the plan or request to validate"
 tools: ['vscode/openSimpleBrowser', 'vscode/vscodeAPI', 'vscode/extensions', 'read/problems', 'read/readFile', 'search', 'web', 'adhd_mcp/get_module_info', 'adhd_mcp/get_project_info', 'adhd_mcp/list_context_files', 'adhd_mcp/list_modules', 'agent', 'ms-python.python/getPythonEnvironmentInfo']
 handoffs:
-  - label: "[📋PM] Create Tasks"
-    agent: HyperPM
-    prompt: "Sanity check passed. Create kanbn tasks from this validated plan: "
-    send: false
   - label: "[🏗️Arch] Implement"
     agent: HyperArch
     prompt: "The plan is sound. Proceed with implementation: "

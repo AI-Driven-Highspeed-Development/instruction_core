@@ -213,6 +213,7 @@ class InstructionController:
     def _sync_files_by_pattern(self, source_dir: Path, target_dir: Path, pattern: str, subdir: str, label: str) -> None:
         """
         Sync files matching a pattern from source subdirectory to target subdirectory.
+        Supports nested subdirectories in source - all files are flattened to target.
         
         Args:
             source_dir: Source directory containing the subdir
@@ -223,8 +224,10 @@ class InstructionController:
         """
         src = source_dir / subdir
         if src.exists():
-            for file_path in src.glob(pattern):
+            # Use rglob to find files in nested subdirectories, flatten to target
+            for file_path in src.rglob(pattern):
                 try:
+                    # Flatten: all files go to target_dir/subdir/ regardless of source nesting
                     dest_path = target_dir / subdir / file_path.name
                     shutil.copy2(file_path, dest_path)
                     self.logger.info(f"Synced {subdir[:-1]} ({label}): {file_path.name}")
@@ -234,6 +237,7 @@ class InstructionController:
     def _sync_data_to_target(self, source_path: Path, target_path: Path, label: str) -> None:
         """
         Sync instruction, agent, and prompt files from source to target.
+        Supports nested subdirectories in source - files are flattened to target.
         
         Args:
             source_path: Source directory containing instructions/, agents/, prompts/ subdirs
@@ -249,6 +253,38 @@ class InstructionController:
         self._sync_files_by_pattern(source_path, target_path, "*.instructions.md", "instructions", label)
         self._sync_files_by_pattern(source_path, target_path, "*.agent.md", "agents", label)
         self._sync_files_by_pattern(source_path, target_path, "*.prompt.md", "prompts", label)
+
+    def _sync_agent_plan(self, source_path: Path) -> None:
+        """
+        Sync .agent_plan directory from source to project root.
+        Overlays files without removing existing files that don't collide.
+        
+        Args:
+            source_path: Source directory containing .agent_plan subdirectory
+        """
+        agent_plan_source = source_path / ".agent_plan"
+        if not agent_plan_source.exists():
+            self.logger.debug(f"No .agent_plan found in {source_path}. Skipping.")
+            return
+        
+        agent_plan_target = self.root_path / ".agent_plan"
+        
+        self.logger.info(f"Syncing .agent_plan from {agent_plan_source} to {agent_plan_target}")
+        
+        # Walk through source and copy files, preserving directory structure
+        for source_file in agent_plan_source.rglob("*"):
+            if source_file.is_file():
+                # Calculate relative path from .agent_plan source
+                relative_path = source_file.relative_to(agent_plan_source)
+                target_file = agent_plan_target / relative_path
+                
+                try:
+                    # Ensure parent directory exists
+                    target_file.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(source_file, target_file)
+                    self.logger.info(f"Synced .agent_plan: {relative_path}")
+                except OSError as e:
+                    self.logger.error(f"Failed to sync .agent_plan file {relative_path}: {e}")
 
     def _sync_module_files_to_target(self, target_path: Path, pattern: str, subdir: str, file_type: str) -> None:
         """
@@ -281,6 +317,9 @@ class InstructionController:
         """Execute the full synchronization process based on config."""
         self.logger.info("Starting instruction synchronization...")
         
+        # Sync .agent_plan from official source to project root
+        self._sync_agent_plan(self.official_source_path)
+        
         # Sync official source to all official targets
         if self.official_target_paths:
             for target_path in self.official_target_paths:
@@ -295,8 +334,9 @@ class InstructionController:
         else:
             self.logger.info("No official targets configured, skipping official sync.")
         
-        # Sync custom source to all custom targets
+        # Sync custom source to all custom targets (also sync its .agent_plan if present)
         if self.custom_target_paths:
+            self._sync_agent_plan(self.custom_source_path)
             for target_path in self.custom_target_paths:
                 self.logger.info(f"Custom sync: {self.custom_source_path} -> {target_path}")
                 self._ensure_target_structure(target_path)

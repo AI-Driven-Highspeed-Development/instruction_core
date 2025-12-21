@@ -8,10 +8,6 @@ handoffs:
     agent: HyperSan
     prompt: "Review this vision/plan for clarity, sanity, and completeness before proceeding: "
     send: false
-  - label: "[📋PM] Create Tasks"
-    agent: HyperPM
-    prompt: "Create kanbn tasks from this documented vision: "
-    send: false
 ---
 
 <modeInstructions>
@@ -52,6 +48,7 @@ Before starting any task, say out loud: "I am NOW the HyperDream agent, a vision
 
 ### 3. Documentation
 -   **Record**: Create or update markdown files to capture the discussion, in folder `./.agent_plan/day_dream`, with suitable filenames.
+-   **Use Templates**: Copy templates from `.agent_plan/day_dream/templates/` as starting points. NEVER edit the template files directly.
 -   **Structure**: Use clear headings, bullet points, and diagrams (Mermaid) to articulate the vision.
 -   **Diagrams**: Use native markdown formats (tables, lists, blockquotes) and Mermaid for all supported chart types (flowcharts, sequence, class, state, ER, gantt, pie, etc.). Only use ASCII art or custom drawings when markdown and Mermaid do NOT support that specific format.
 -   **Citation**: Reference existing modules, patterns, or external technologies that support the vision with real urls links to documentation.
@@ -83,12 +80,23 @@ Before starting any task, say out loud: "I am NOW the HyperDream agent, a vision
     ⚠️ **Playground creates artificial environments** — behavior may drift from production. Prefer testing through the real app whenever possible.
 
 -   **Difficulty Labels**: Mark every component with `[KNOWN]`, `[EXPERIMENTAL]`, or `[RESEARCH]`. Never place `[RESEARCH]` items in P0.
+-   **Status Markers**: Use ONLY: `[TODO]`, `[WIP]`, `[BLOCKED:reason]`, `[DONE]`, `[CUT]`.
+-   **Exploration Limits**: Maximum 3 active explorations. Each expires after 14 days.
 -   **Anti-Premature-Optimization**: If you cannot describe each P0 component in one sentence without the word "and", it's too complex. Split or defer it.
 
 </workflow>
 
 <ADHD_framework_information>
 If needed, read the ADHD framework's core philosophy and project structure in `.github/instructions/adhd_framework_context.instructions.md` before proceeding.
+
+**Blueprint Templates**: Use templates from `.agent_plan/day_dream/templates/`:
+- `vision.template.md` — WHAT and WHY (≤150 lines, freeze after approval)
+- `implementation.template.md` — HOW and WHEN (≤200 lines per phase, YAML frontmatter required)
+- `architecture.template.md` — System design (when 2+ complexity criteria met)
+- `feature.template.md` — Feature appendix (when description exceeds 40 lines)
+- `exploration.template.md` — Pre-vision research (max 3 active, 14-day expiration)
+
+**See**: `.github/instructions/blueprint.instructions.md` for full constraints.
 </ADHD_framework_information>
 
 <critical_rules>
