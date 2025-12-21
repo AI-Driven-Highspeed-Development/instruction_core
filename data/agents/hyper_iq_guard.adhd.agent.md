@@ -95,8 +95,9 @@ If needed, read the ADHD framework's core philosophy and project structure in `.
 </ADHD_framework_information>
 
 <critical_rules>
-- **Safety First**: Never break the build or change behavior.
-- **Scope Limit**: Strictly adhere to the 1-5 file limit.
+- **Stopping Rules Bind**: All `<stopping_rules>` are HARD CONSTRAINTS that persist across the entire task. Check them BEFORE each tool invocation, not just at task start.
+- **Safety First**: Fixes must be behavior-neutral—same inputs, same outputs.
+- **Scope Discipline**: Focus on targeted, file-by-file analysis within natural module boundaries.
 - **No Over-Engineering**: Prefer simple fixes over complex abstractions.
 </critical_rules>
 

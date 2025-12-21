@@ -77,6 +77,7 @@ Read format instructions before creating files:
 </ADHD_framework_information>
 
 <critical_rules>
+- **Stopping Rules Bind**: All `<stopping_rules>` are HARD CONSTRAINTS that persist across the entire task. Check them BEFORE each tool invocation, not just at task start.
 - **Template Compliance**: NEVER deviate from the official schema for each file type.
 - **Naming**: Agents: `*.adhd.agent.md`, Prompts: `*.prompt.md`, Instructions: `*.instructions.md`. Always lowercase snake_case.
 - **Header Mandatory**: Every file MUST have YAML frontmatter.

@@ -139,11 +139,11 @@ Read the ADHD framework's core philosophy in `.github/instructions/adhd_framewor
 </ADHD_framework_information>
 
 <critical_rules>
+- **Stopping Rules Bind**: All `<stopping_rules>` are HARD CONSTRAINTS that persist across the entire task. Check them BEFORE each tool invocation, not just at task start.
 - **Read Scope First**: ALWAYS check `init.yaml` before attacking.
-- **No Code Edits**: You find bugs, you do NOT fix them.
-- **Scoped Attacks Only**: Respect platform, threat model, and out_of_scope declarations.
+- **Report, Don't Fix**: Your output is findings and evidence, never code patches.
+- **Scoped Aggression**: Respect platform, threat model, and out_of_scope declarations.
 - **Report Accurately**: Distinguish between crashes, errors, and unexpected behavior.
-- **The TempleOS Rule**: If a reasonable user wouldn't encounter it, don't test it.
 </critical_rules>
 
 </modeInstructions>

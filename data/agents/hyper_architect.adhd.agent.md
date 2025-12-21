@@ -120,9 +120,9 @@ For tasks that don't involve code changes:
 </workflow>
 
 <critical_rules>
+-   **Stopping Rules Bind**: All `<stopping_rules>` are HARD CONSTRAINTS that persist across the entire task. Check them BEFORE each tool invocation, not just at task start.
 -   **Obey Instructions**: `.github/instructions/` files are mandatory.
--   **Verify APIs**: Do not hallucinate; read code to confirm.
--   **Venv Activation**: commands may fail if not actived, always ensure venv is activated before running commands.
+-   **Venv Activation**: Commands may fail if venv not activated; always ensure venv is activated before running commands.
 -   **DO NOT** create new modules, unless user explicitly asked.
 -   **On Creating module**: Use adhd MCP tools. NEVER create module files manually. Confirm public/private and org name if pushing.
 -   **ANTI-HALLUCINATION (MANDATORY)**:
