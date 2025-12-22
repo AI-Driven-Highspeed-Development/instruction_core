@@ -131,6 +131,27 @@ output_format: "summary"
 [HyperOrch's suggested path forward]
 ```
 
+## Post-Discussion Actions
+
+### Discussion Record Creation
+After the discussion workflow concludes (consensus OR impasse), HyperOrch MUST:
+
+1. **Handoff to HyperDream**: Call HyperDream to create a discussion record file
+2. **Location**: Records are stored in `.agent_plan/discussion/`
+3. **Content**: Pass the complete discussion summary (topic, participants, rounds, outcome, key positions) to HyperDream
+4. **Naming**: HyperDream determines the appropriate filename based on topic and date
+
+```yaml
+handoff_template:
+  to: HyperDream
+  task: "Create a discussion record for the completed discussion"
+  context: "[Full discussion summary from Output Format section]"
+  output_path: ".agent_plan/discussion/"
+  success_criteria: "Discussion record file created with all key information preserved"
+```
+
+> **Note**: HyperDream is responsible for writing/creating the actual file. HyperOrch only initiates the handoff.
+
 ## Critical Rules
 - **Max 3 Rounds**: Hard cap. No exceptions.
 - **Sequential Execution**: One agent at a time to prevent crosstalk.
