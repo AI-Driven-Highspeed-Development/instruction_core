@@ -1,11 +1,45 @@
 ---
-applyTo: "**/*.agent.md,cores/instruction_core/data/agents/hyper_exped.adhd.agent.md"
+applyTo: "cores/instruction_core/data/agents/hyper_expedition.adhd.agent.md"
 ---
 
 # HyperExped Reference Guide
 
 ## Purpose
 HyperExped exports ADHD Framework agents/instructions to **external projects** (Vue3, React, Unity, Rust, Go, ANY framework). This file provides runtime reference for edge cases and structure mapping.
+
+## Pipeline Context
+
+HyperExped operates within an **8-phase expedition pipeline** orchestrated by HyperOrch:
+
+```
+Scout(1) → Readiness(2) → Planning(3) → Feasibility(4) → 🛑 → Execution(5) → Verify(6) → 🛑 → Registry(7) → 🛑 → MCP(8)
+```
+
+**HyperExped Responsibilities:**
+| Phase | Role | Output |
+|-------|------|--------|
+| 1: Scout | **Owner** | `scout_report.md` |
+| 3: Planning | **Contributor** (with Dream) | `expedition_scope.yaml`, `adaptation_notes.md` |
+| 5: Execution | **Coordinator** | Delegates to Smith |
+
+## L1 Bundle Architecture
+
+**Key Principle:** Target projects remain pristine. Sidecar owns all ADHD infrastructure.
+
+| Location | Assets |
+|----------|--------|
+| **Sidecar** | MCPs, registry managers, `.agent_plan/`, expedition profiles |
+| **Target** | `.github/` (agents, instructions, prompts), `.vscode/mcp.json`, `CONTRIBUTING.md` |
+
+**CRITICAL:** NO `.agent_plan/` in target. All planning artifacts stay in sidecar.
+
+## Execution Constraints
+
+| Constraint | Value | Rationale |
+|------------|-------|-----------|
+| Chunk size | ≤5 files/batch | Enables granular review and rollback |
+| Max artifacts | ≤25 per expedition | Prevents overwhelming scope |
+| Mode | PAUSE (default) | Human confirmation per chunk |
 
 ## Special Files by Ecosystem
 
