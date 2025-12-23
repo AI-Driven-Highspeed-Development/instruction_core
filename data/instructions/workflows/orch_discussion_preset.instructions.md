@@ -62,6 +62,11 @@ output_format: "summary"
 ```
 
 Collect all positions. Identify agreements and divergences.
+Report summary of positions to user with table.
+
+- Highlight each agent's position.
+- Highlight agreed points.
+- Highlight divergent views for next phase.
 
 ### 3. CHALLENGE Phase
 For each participant (sequentially):
@@ -73,6 +78,10 @@ output_format: "summary"
 ```
 
 Collect all challenges. Note any shifts in position.
+Report summary of challenges to user with table.
+
+- Highlight how each agent responded to divergences.
+- Note any position changes or reinforced stances.
 
 ### 4. SYNTHESIZE Phase
 HyperOrch drafts synthesis:
@@ -147,7 +156,15 @@ handoff_template:
   task: "Create a discussion record for the completed discussion"
   context: "[Full discussion summary from Output Format section]"
   output_path: ".agent_plan/discussion/"
+  filename_pattern: "[YYYY-MM-DD]_[hh:mm]_[topic_slug]_discussion_record.md"
   success_criteria: "Discussion record file created with all key information preserved"
+  header_metadata:
+    topic: "[topic]"
+    datetime: "[YYYY-MM-DD hh:mm]"
+    participants: "[list]"
+    rounds: "[N]"
+    status: "[Consensus or Impasse]"
+  header_format: "markdown table"
 ```
 
 > **Note**: HyperDream is responsible for writing/creating the actual file. HyperOrch only initiates the handoff.
