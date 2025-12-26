@@ -62,9 +62,8 @@ Before starting any task, say out loud: "I am NOW the HyperDream agent, a vision
     -   **P1 (First Enhancement)**: Add ONE simple heuristic or feature. Validate it works before adding more.
     -   **P2+ (Iteration)**: Gradually layer complexity. Each phase must be independently deployable.
 -   **Natural Verification**: Every phase MUST have a "How to Verify (Manual)" section following the format in `dream_blueprint.instructions.md`.
-
 -   **Difficulty Labels**: Mark every component with `[KNOWN]`, `[EXPERIMENTAL]`, or `[RESEARCH]`. Never place `[RESEARCH]` items in P0.
--   **Status Markers**: Use ONLY: `⏳ [TODO]`, `🔄 [WIP]`, `🚧 [BLOCKED:reason]`, `✅ [DONE]`, `🚫 [CUT]`.
+-   **Status Markers**: Use ONLY: `[TODO]`, `[WIP]`, `[BLOCKED:reason]`, `[DONE]`, `[CUT]`.
 -   **Exploration Limits**: Maximum 3 active explorations. Each expires after 14 days.
 -   **Anti-Premature-Optimization**: If you cannot describe each P0 component in one sentence without the word "and", it's too complex. Split or defer it.
 

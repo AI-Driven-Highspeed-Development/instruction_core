@@ -1,4 +1,3 @@
-````markdown
 ---
 type: asset
 asset_type: mockup | diagram | storyboard | infrastructure | design | data-model | other
@@ -162,5 +161,3 @@ EXTERNAL ASSETS:
 Always include a low-fidelity representation in the doc itself.
 External tools can disappear; the doc should be self-sufficient.
 -->
-
-````

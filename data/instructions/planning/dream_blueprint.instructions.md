@@ -47,8 +47,13 @@ All templates at: `.agent_plan/day_dream/templates/`
 | `blueprint/01_executive_summary.template.md` | Vision, goals, non-goals | ≤150 lines |
 | `blueprint/02_architecture.template.md` | System diagrams, logical components | ≤200 lines |
 | `blueprint/NN_feature.template.md` | Per-feature details | ≤150 lines |
+| `blueprint/NN_feature_simple.template.md` | Lightweight feature (80% of cases) | ≤100 lines |
 | `blueprint/80_implementation.template.md` | Phased roadmap | ≤200 lines per phase |
+| `blueprint/81_module_structure.template.md` | Reusable vs Project-Specific modules | ≤150 lines |
+| `blueprint/82_cli_commands.template.md` | CLI interface and command reference | ≤150 lines |
+| `blueprint/modules/module_spec.template.md` | Detailed module implementation spec | ≤200 lines |
 | `blueprint/99_references.template.md` | External links | No limit |
+| `blueprint/deep_dive_reference.md` | Reference for Deep Dive subsections | Reference doc |
 | `blueprint/exploration.template.md` | Pre-vision research | ≤200 lines |
 
 ### Assets (Multi-Modal Artifacts)
@@ -102,6 +107,111 @@ Every feature/task MUST have a difficulty label:
 
 ## Document Rules
 
+### Internal Document Structure
+
+Every blueprint document follows the **Story → Spec** pattern:
+
+```markdown
+## 📖 The Story
+{Visual, scannable narrative — NOT a text wall}
+
+---
+
+## 🔧 The Spec
+<!-- Technical specification begins here -->
+```
+
+**The Story Requirements (Visual-First for ADHD readers):**
+
+| Principle | Do This | Not This |
+|-----------|---------|----------|
+| **Format** | ASCII boxes, tables, emoji anchors | Paragraphs of prose |
+| **Scannability** | 10-second grasp of problem/solution | Reading required |
+| **Structure** | Pain → Vision → One-Liner → Impact | Unstructured narrative |
+| **Length** | CAN be longer if visual & useful | Short text walls |
+
+**Required Subsections:**
+
+| Subsection | Purpose | Visual Format |
+|------------|---------|---------------|
+| 😤 **The Pain** | What's broken, who hurts | ASCII box showing blocked flow + pain table |
+| ✨ **The Vision** | What success looks like | ASCII box showing working flow |
+| 🎯 **One-Liner** | Elevator pitch | Single blockquote sentence |
+| 📊 **Impact** | Before/After metrics | Comparison table with ❌/✅ |
+
+**Example Story Section:**
+
+```markdown
+### 😤 The Pain
+
+┌─────────────────────────────────────────┐
+│  User wants X  ──────►  💥 BLOCKED 💥   │
+│  Because: [root cause]                  │
+└─────────────────────────────────────────┘
+
+| Who Hurts | Pain Level | Frequency |
+|-----------|------------|-----------|
+| Developer | 🔥🔥🔥 High | Daily |
+
+### ✨ The Vision
+
+┌─────────────────────────────────────────┐
+│  User wants X  ──────►  ✅ SUCCESS      │
+│  Flow: step → step → result             │
+└─────────────────────────────────────────┘
+
+### 🎯 One-Liner
+
+> We're building [thing] so [persona] can [outcome] without [pain].
+
+### 📊 Impact
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Time to X | ❌ 10 min | ✅ 10 sec |
+```
+
+**Why Visual > Text Walls:**
+- ADHD readers skip prose, scan visuals
+- ASCII boxes create spatial memory anchors
+- Tables enable instant comparison
+- Emoji provide visual hierarchy
+- Before/After format shows transformation
+
+**If you can't draw the pain and vision, you don't understand the feature**
+
+**The Spec Requirements:**
+- Everything after the horizontal rule
+- Technical details, diagrams, tables
+- Implementation-focused content
+
+### Mandatory Skeleton Pattern
+
+Sections marked as "optional" in previous templates are now **mandatory skeletons**:
+
+| Old Pattern | New Pattern |
+|-------------|-------------|
+| `<!-- Optional: ... -->` | Section present; write "N/A — [reason]" if not applicable |
+| `<!-- OPTIONAL -->` | Always include; document why N/A |
+
+**Rationale:** "Optional" is interpreted as "skip if uncertain." Mandatory skeleton forces documentation of decisions.
+
+**Example:**
+```markdown
+## 🗺️ System Context
+
+N/A — Single module with no external integrations. All logic contained in `{manager}/`.
+```
+
+### Template Selection (Simple vs Full)
+
+| Template | Use When | Line Target |
+|----------|----------|-------------|
+| `NN_feature_simple.template.md` | ≤2 modules, no external APIs, not P0, no deep technical decisions | 80-100 lines |
+| `NN_feature.template.md` | ≥3 modules, external APIs, P0 priority, needs Deep Dive | 150-300 lines |
+
+**Upgrade Triggers:** Expand simple → full when complexity increases.
+
 ### Simple Tier
 - Single file, ~50-200 lines
 - Must include: Hook, What's Here, Quick Start, API Reference
@@ -133,6 +243,23 @@ Every feature/task MUST have a difficulty label:
 - Optional: System Context diagram, Data Flow, Integration Points
 - Related Assets: Link to mockups/diagrams in `../assets/` folder (see `dream_assets.instructions.md`)
 
+#### Module Structure (`81_module_structure.md`)
+- REQUIRED for ADHD projects.
+- Defines Reusable vs Project-Specific modules.
+- Proposed file tree with phase annotations.
+- Uses **mandatory skeleton** pattern for module lists.
+
+#### Module Specs (`modules/{module_name}.md`)
+- **Required section:** `## Implements Features` (bidirectional traceability)
+- Links to feature docs that this module serves
+- If utility-only, explicitly state: "N/A — Utility module providing [capability]"
+- Creates bidirectional traceability: features ↔ modules
+
+#### CLI Commands (`82_cli_commands.md`)
+- OPTIONAL.
+- Required if project exposes a CLI.
+- Admin vs User command reference tables.
+
 ##### Custom Sections (FREE ZONE)
 Authors may add project-specific sections with these rules:
 - **Prefix Convention**: Use `## [Custom] 🎨 Title` (e.g., `## [Custom] 🎨 Analytics Events`)
@@ -161,11 +288,73 @@ Optional section for implementation-heavy features:
 - Target Folder Structure: Per-phase NEW/MODIFIED files
 - P0 Hard Limits: 3-5 days, max 5 tasks, no `[RESEARCH]`
 - Error Handling Implementation section
-- Verification: Every phase needs "How to Verify (Manual)"
+- **Natural Verification**: Every phase MUST have a "How to Verify (Manual)" section.
+    - **Rationale**: Automated tests are code, and code can have bugs. Humans need a direct, intuitive way to confirm each stage works before proceeding.
+    - **Format**:
+        - Max 3 human-executable steps (1-2 for P0/P1)
+        - Expected outcome for each step
+        - Steps must complete in <30 seconds
+        - Use table: "What to try" | "Expected result"
+    - **Verification Method Priority**:
+        1. **Production entry point** (preferred) — The actual app (`./app.py`, CLI) tests the real code path.
+        2. **Native tooling** — Browser, `curl`, terminal commands, REPL.
+        3. **Playground** (fallback) — Only when production testing is genuinely impossible.
 
 #### Exploration
 - Max 3 active, 14-day expiration
 - Archive to `exploration/_archive/` when done
+- Uses **Story/Spec** pattern (Story = what decision is blocked)
+
+---
+
+## Validation Checklists
+
+Every blueprint document includes an embedded validation checklist:
+
+### Checklist Categories
+
+| Category | Validates |
+|----------|-----------|
+| **Narrative** | The Story section, intent clarity, scope bounds |
+| **Technical** | Endpoints, error cases, dependencies |
+| **Linkage** | Bidirectional references between docs |
+
+### Checklist Rules
+
+1. **Mandatory:** Cannot mark document as "ready" with unchecked items
+2. **Position:** At bottom of document, before navigation links
+3. **Format:** Checkbox list with clear pass/fail criteria
+4. **Tier-specific:** Different checklists for features vs modules vs implementation
+
+### Example Feature Checklist
+
+```markdown
+## ✅ Feature Validation Checklist
+
+### Narrative Completeness
+- [ ] The Story section clearly states user problem and value
+- [ ] Intent is unambiguous to a non-technical reader
+- [ ] Scope is explicitly bounded
+
+### Technical Completeness
+- [ ] Integration Points table has all connections
+- [ ] Edge Cases cover failure scenarios
+- [ ] Acceptance Criteria are testable
+```
+
+### Example Module Checklist
+
+```markdown
+## ✅ Module Validation Checklist
+
+### Traceability
+- [ ] Implements Features section links to ≥1 feature OR marked as utility
+- [ ] All linked features have backlinks to this module spec
+
+### Completeness
+- [ ] Responsibilities clearly state DO and DON'T
+- [ ] Public API section defines interface contract
+```
 
 ---
 
@@ -187,7 +376,11 @@ Optional section for implementation-heavy features:
 │   ├── 02_architecture.md
 │   ├── 03_feature_*.md
 │   ├── 80_implementation.md
-│   └── 99_references.md
+│   ├── 81_module_structure.md
+│   ├── 82_cli_commands.md
+│   ├── 99_references.md
+│   └── modules/
+│       └── {module_name}.md
 ├── assets/                  # Non-code artifacts
 │   ├── {feature_id}_{description}.asset.md
 │   └── ...

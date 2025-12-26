@@ -4,6 +4,23 @@
 
 ---
 
+## 📖 The Story
+
+<!--
+REQUIRED: The paragraph that justifies this project's existence.
+A PM should be able to read this and decide whether to fund it.
+-->
+
+{Users can't [X], and it frustrates them because [Y]. This project lets them [Z], which saves [time/money/pain]. Without this, [consequence].}
+
+---
+
+## 🔧 The Spec
+
+<!-- Everything below is specification detail. -->
+
+---
+
 ## 🌟 TL;DR
 
 <!-- 
@@ -78,6 +95,47 @@ DIFFICULTY LABELS:
 | P2 | {Feature Name} | `[RESEARCH]` | {One sentence} |
 
 → See individual [Feature Docs](./03_feature_{name}.md) for details.
+
+---
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- FREE ZONE START - Add custom sections below using "## [Custom] 🎨 Title"-->
+<!--                                                                         -->
+<!-- Maximum 5 custom sections. This is YOUR space for thinking that doesn't -->
+<!-- fit standard templates. Be creative. Be honest. Be useful.              -->
+<!--                                                                         -->
+<!-- 📐 STRUCTURAL EXAMPLES:                                                 -->
+<!--   ## [Custom] 📊 Performance Benchmarks                                 -->
+<!--   ## [Custom] 🔄 Migration Strategy                                     -->
+<!--   ## [Custom] 🧪 A/B Testing Plan                                       -->
+<!--   ## [Custom] 📈 Success Metrics                                        -->
+<!--   ## [Custom] 🔐 Security Considerations                                -->
+<!--                                                                         -->
+<!-- 🧠 THINKING TOOLS (for complex decisions):                              -->
+<!--   ## [Custom] ⚖️ Philosophical Tensions — Contradictions you're         -->
+<!--        navigating (speed vs accuracy, simplicity vs power)              -->
+<!--   ## [Custom] ⚰️ Assumption Graveyard — Risky bets that could kill      -->
+<!--        the feature if wrong (with early validation strategy)            -->
+<!--   ## [Custom] 🎭 Metaphor Map — Analogies that explain the system       -->
+<!--        to different audiences (devs, users, stakeholders)               -->
+<!--   ## [Custom] 🔮 Future Regret Analysis — "What will we wish we had     -->
+<!--        done differently in 6 months?"                                   -->
+<!--   ## [Custom] 🐘 Uncomfortable Questions — Things nobody wants to       -->
+<!--        ask but everyone should (scaling, maintenance burden, etc.)      -->
+<!--   ## [Custom] 📜 Decision Log — Key choices made and WHY (not just what)-->
+<!--                                                                         -->
+<!-- 🎯 SCOPE & BOUNDARIES:                                                  -->
+<!--   ## [Custom] 🚧 Scope Fences — Hard lines that prevent scope creep     -->
+<!--   ## [Custom] 🎰 Feature Lottery — Ideas we're NOT doing (but could)    -->
+<!--   ## [Custom] ⏰ Time Bombs — Technical debt we're knowingly creating   -->
+<!--                                                                         -->
+<!-- See: templates/examples/free_zone_*.example.md for real examples        -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- FREE ZONE END                                                           -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
 
 ---
 
@@ -166,6 +224,27 @@ Remove this section if not using agent handoffs.
 - [ ] Success Metrics are quantifiable
 
 **HANDOFF STATUS:** ⬜ Pending | ✅ Complete
+
+---
+
+## ✅ Executive Summary Validation Checklist
+
+<!-- MANDATORY: Must pass before blueprint is considered "ready for review". -->
+
+### Narrative (The Story)
+- [ ] **Problem** is specific (names who hurts and how)
+- [ ] **Value** is quantifiable or emotionally resonant
+- [ ] **Consequence** of not solving is clear
+
+### Scope Boundaries
+- [ ] **Non-Goals** has ≥3 explicit exclusions
+- [ ] **Features Overview** has ≤5 P0 features
+- [ ] No `[RESEARCH]` items in P0
+
+### Technical Grounding
+- [ ] **Prior Art** section documents ≥2 alternatives considered
+- [ ] **Tech Preferences** are stated (or "no preference")
+- [ ] **Scope Budget** has time estimates per phase
 
 ---
 

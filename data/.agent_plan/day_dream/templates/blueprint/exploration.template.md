@@ -13,6 +13,22 @@ synthesized_to: null
 
 ---
 
+## 📖 The Story
+
+<!--
+REQUIRED: What decision is blocked without this exploration?
+-->
+
+{We can't proceed with [feature/architecture] until we decide [X vs Y]. This exploration resolves that by [approach].}
+
+---
+
+## 🔧 The Spec
+
+<!-- Analysis and recommendation below -->
+
+---
+
 ## 🎯 Decision Context
 
 **Question:** {What specific decision does this exploration answer?}

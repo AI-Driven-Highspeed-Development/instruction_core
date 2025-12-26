@@ -4,6 +4,22 @@
 
 ---
 
+## 📖 The Story
+
+<!--
+REQUIRED: Why does this architecture exist? What problem does it solve?
+-->
+
+{This architecture enables [capability] by [approach]. Without it, [consequence].}
+
+---
+
+## 🔧 The Spec
+
+<!-- Technical specification begins here -->
+
+---
+
 ## 🏗️ System Overview
 
 <!-- 
@@ -187,6 +203,25 @@ Detailed error types and recovery → implementation.md
 This project follows a **{fail-fast | graceful-degradation}** philosophy. 
 {Explain: When do we crash vs. recover? What's the user experience on error? 
 Example: "API failures retry 3x then surface to user. Invalid data logs warning and skips row."}
+
+---
+
+## ✅ Architecture Validation Checklist
+
+### Diagram Completeness
+- [ ] **High-level diagram** shows all major components
+- [ ] **Data flow diagram** traces primary use case
+- [ ] Diagrams fit on one screen (no horizontal scroll)
+
+### Component Definition
+- [ ] Each **Logical Component** has Purpose, Boundary, Implemented By
+- [ ] **Module Boundaries** exceptions are justified
+- [ ] **Key Design Principles** ≤5 and each has implementation implication
+
+### Integration
+- [ ] **External APIs** documented with auth method
+- [ ] **File Formats** have schema location
+- [ ] **Error Philosophy** stated (fail-fast vs graceful-degradation)
 
 ---
 

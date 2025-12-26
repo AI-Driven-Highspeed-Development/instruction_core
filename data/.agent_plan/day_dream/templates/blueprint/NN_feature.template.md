@@ -3,22 +3,92 @@
 ║                         FIXED SECTION NAMES                                   ║
 ║  Do NOT rename these sections - they are used for cross-referencing:          ║
 ║                                                                               ║
-║  REQUIRED:        🎯 Overview, 👥 User Stories, ✅ Acceptance Criteria        ║
+║  REQUIRED:        🎯 Overview, � Prior Art, 👥 User Stories,                 ║
+║                   ✅ Acceptance Criteria                                      ║
 ║  STANDARD:        🗺️ System Context, 📊 Data Flow, 🔗 Integration Points,     ║
 ║                   🛠️ Technical Notes, ⚠️ Edge Cases, ❌ Out of Scope,         ║
 ║                   🔗 Dependencies, ❓ Open Questions, 🖼️ Related Assets       ║
 ║                                                                               ║
 ║  CUSTOM SECTIONS: Use "## [Custom] Your Title" prefix for project-specific    ║
-║                   sections (max 5 custom sections per document)               ║
+║                   sections (max 5, min 1 custom sections per document)        ║
 ║                                                                               ║
 ║  FREE ZONES:      Look for FREE ZONE markers where you can add                ║
 ║                   content without following strict templates                  ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 -->
 
+<!-- 
+🚦 TEMPLATE SELECTION GUIDE
+Use this full template for COMPLEX features:
+  - ≥3 modules involved
+  - External API integration
+  - P0 priority (critical path)
+  - Requires Deep Dive (algorithms, state machines, API contracts)
+
+For SIMPLER features, use: NN_feature_simple.template.md
+-->
+
 # NN - Feature: {Feature Name}
 
 > Part of [{Project Name} Blueprint](./00_index.md)
+
+---
+
+## 📖 The Story
+
+<!--
+REQUIRED: Visual, scannable narrative — NOT a text wall.
+Use ASCII boxes, tables, and emoji anchors. A PM should grasp the problem/solution in 10 seconds.
+If you can't draw the pain and vision, you don't understand the feature.
+-->
+
+### 😤 The Pain
+
+<!-- What's broken? Who hurts? Show it visually! -->
+
+```
+Current Reality:
+┌─────────────────────────────────────────┐
+│  User wants {X}  ──────►  💥 BLOCKED 💥 │
+│                                         │
+│  Because: {root cause}                  │
+└─────────────────────────────────────────┘
+```
+
+| Who Hurts | Pain Level | Frequency |
+|-----------|------------|-----------|
+| {persona} | 🔥🔥🔥 High | Daily |
+| {persona} | 🔥🔥 Medium | Weekly |
+
+### ✨ The Vision
+
+<!-- What does success look like? Show the transformation! -->
+
+```
+After This Feature:
+┌─────────────────────────────────────────┐
+│  User wants {X}  ──────►  ✅ SUCCESS    │
+│                                         │
+│  Flow: {step} → {step} → {result}       │
+└─────────────────────────────────────────┘
+```
+
+### 🎯 One-Liner
+
+> {The elevator pitch in ONE sentence — what we're building and why it matters}
+
+### 📊 Impact
+
+| Metric | Before | After |
+|--------|--------|-------|
+| {metric} | ❌ {bad state} | ✅ {good state} |
+| {metric} | ❌ {bad state} | ✅ {good state} |
+
+---
+
+## 🔧 The Spec
+
+<!-- Everything below this line is technical specification. -->
 
 ---
 
@@ -36,13 +106,56 @@ This is the "appendix" for features that exceeded the 5-line limit in executive 
 
 ---
 
-<!-- OPTIONAL: Use when feature touches ≥3 modules or has external integrations -->
+## 📚 Prior Art
+
+<!-- 
+MANDATORY SECTION: Research existing solutions before building.
+This prevents reinventing wheels and documents our informed decisions.
+-->
+
+### Existing Solutions
+
+| Solution | Type | Relevance | Status |
+|----------|------|-----------|--------|
+| {Library/Tool/API name} | Library / Tool / Service / Pattern | High / Medium / Low | ✅ Adopt / 🔧 Adapt / ❌ Reject |
+| {Another solution} | {type} | {relevance} | {status} |
+
+### Usage Decision
+
+<!-- For each solution marked ✅ Adopt or 🔧 Adapt -->
+
+**Using:** {Solution name}  
+**How:** {Specific integration approach - which parts, how wrapped, etc.}  
+**Why this over alternatives:** {1-2 sentences}
+
+### Build-vs-Adopt Justification
+
+<!-- For any custom implementation (when existing solutions were rejected) -->
+
+| Rejected Solution | Reason for Building Custom |
+|-------------------|---------------------------|
+| {Library name} | {Specific limitation: too heavy, missing feature X, licensing, etc.} |
+
+<!-- 
+GUIDELINES:
+- "Not invented here" is NOT a valid reason
+- "We want to learn" is valid for EXPERIMENTAL features only
+- Performance claims MUST have benchmarks or be marked [UNVERIFIED]
+- If no prior art exists, state "No established solutions found" with search terms used
+-->
+
+---
+
 ## 🗺️ System Context
 
 <!-- 
-Show where this feature lives in the overall system.
-Mermaid preferred, ASCII acceptable for simple cases.
+MANDATORY SKELETON: Always include. Write "N/A — [reason]" if not applicable.
+Use when: Feature touches ≥3 modules or has external integrations.
+Show where this feature lives in the overall system. Mermaid preferred.
 -->
+
+<!-- If not applicable: -->
+<!-- N/A — Single module, no external integrations. -->
 
 ```mermaid
 flowchart LR
@@ -57,10 +170,16 @@ flowchart LR
 
 ---
 
-<!-- OPTIONAL: Use when data transformation is non-trivial -->
 ## 📊 Data Flow
 
-<!-- Input → Processing → Output for this feature -->
+<!-- 
+MANDATORY SKELETON: Always include. Write "N/A — [reason]" if not applicable.
+Use when: Data transformation is non-trivial.
+Input → Processing → Output for this feature.
+-->
+
+<!-- If not applicable: -->
+<!-- N/A — Straightforward pass-through, no transformation. -->
 
 ```mermaid
 flowchart LR
@@ -78,8 +197,8 @@ flowchart LR
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
 <!-- FREE ZONE START - Add custom sections below using "## [Custom] 🎨 Title"-->
 <!--                                                                         -->
-<!-- Maximum 5 custom sections. This is YOUR space for thinking that doesn't -->
-<!-- fit standard templates. Be creative. Be honest. Be useful.              -->
+<!-- Maximum 5, minimum 1 custom sections. This is YOUR space for thinking   -->
+<!-- that doesn't fit standard templates. Be creative. Be honest. Be useful. -->
 <!--                                                                         -->
 <!-- 📐 STRUCTURAL EXAMPLES:                                                 -->
 <!--   ## [Custom] 📊 Performance Benchmarks                                 -->
@@ -88,7 +207,7 @@ flowchart LR
 <!--   ## [Custom] 📈 Success Metrics                                        -->
 <!--   ## [Custom] 🔐 Security Considerations                                -->
 <!--                                                                         -->
-<!-- 🧠 THINKING TOOLS (for complex decisions):                              -->
+<!-- 🧠 THINKING EXAMPLES (for complex decisions):                           -->
 <!--   ## [Custom] ⚖️ Philosophical Tensions — Contradictions you're         -->
 <!--        navigating (speed vs accuracy, simplicity vs power)              -->
 <!--   ## [Custom] ⚰️ Assumption Graveyard — Risky bets that could kill      -->
@@ -100,6 +219,7 @@ flowchart LR
 <!--   ## [Custom] 🐘 Uncomfortable Questions — Things nobody wants to       -->
 <!--        ask but everyone should (scaling, maintenance burden, etc.)      -->
 <!--   ## [Custom] 📜 Decision Log — Key choices made and WHY (not just what)-->
+<!--   ## [Custom] 🎨 GUI mock-up — Ascii art for the looks and feel         -->
 <!--                                                                         -->
 <!-- 🎯 SCOPE & BOUNDARIES:                                                  -->
 <!--   ## [Custom] 🚧 Scope Fences — Hard lines that prevent scope creep     -->
@@ -260,6 +380,27 @@ If you delete this section, also remove it from the FIXED SECTIONS comment at bo
 This section is for RIGOROUS TECHNICAL ARTIFACTS that require precision.
 These are NOT conceptual discussions — they are engineering documentation.
 
+⚠️  CODE EXAMPLES WARNING ⚠️
+════════════════════════════════════════════════════════════════════════════════
+Code blocks in this section are CONCEPTUAL ILLUSTRATIONS, not implementation specs.
+
+❌ DO NOT take code examples literally
+❌ DO NOT copy-paste into production
+❌ DO NOT assume exact function signatures, types, or patterns
+
+✅ Use code blocks ONLY for:
+   • Logic showcase: "The core idea is roughly: if X then Y"
+   • Simple examples: Demonstrating a concept in 5-10 lines
+   • API sketches: Showing intended developer experience (DX)
+
+✅ Code should communicate INTENT, not IMPLEMENTATION
+
+If you need precise specs, use:
+   • API Contract section (with versioning)
+   • OpenAPI/JSON Schema references
+   • Link to actual source files
+════════════════════════════════════════════════════════════════════════════════
+
 🎯 LITMUS TEST: "Would this require a whiteboard with diagrams and numbers?"
    If yes → Deep Dive is warranted. If just discussion → use FREE ZONE.
 
@@ -356,6 +497,29 @@ sequenceDiagram
 
 ---
 
+## ✅ Feature Validation Checklist
+
+<!-- 
+MANDATORY: Complete before handoff. Cannot proceed with unchecked items.
+-->
+
+### Narrative Completeness
+- [ ] **The Story** section clearly states user problem and value
+- [ ] **Intent** is unambiguous to a non-technical reader
+- [ ] **Scope** is explicitly bounded (Out of Scope section filled)
+
+### Technical Completeness  
+- [ ] **Integration Points** table has all connections documented
+- [ ] **Edge Cases** table covers failure scenarios
+- [ ] **Dependencies** are listed with status
+- [ ] **Acceptance Criteria** are testable (not vague)
+
+### Linkage
+- [ ] **Related module specs** link back to this feature
+- [ ] **Assets** are linked if mockups/diagrams exist
+
+---
+
 **Prev:** [Architecture](./02_architecture.md) | **Next:** [Next Feature](./NN_feature_{next}.md)
 
 ---
@@ -373,7 +537,7 @@ WHEN TO CREATE:
 - Feature has complex acceptance criteria
 
 FIXED SECTIONS (do NOT rename):
-- 🎯 Overview, 👥 User Stories, ✅ Acceptance Criteria (REQUIRED)
+- 🎯 Overview, � Prior Art, �👥 User Stories, ✅ Acceptance Criteria (REQUIRED)
 - 🗺️ System Context, 📊 Data Flow, 🔗 Integration Points (OPTIONAL)
 - 🛠️ Technical Notes, ⚠️ Edge Cases, ❌ Out of Scope (OPTIONAL)
 - 🔗 Dependencies, ❓ Open Questions, 🖼️ Related Assets (STANDARD)

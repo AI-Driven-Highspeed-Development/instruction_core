@@ -10,6 +10,20 @@ last_updated: "{YYYY-MM-DD}"
 
 > Part of [{Project Name} Blueprint](./00_index.md)
 
+<!-- 
+⚠️  CODE EXAMPLES & FOLDER STRUCTURES WARNING ⚠️
+════════════════════════════════════════════════════════════════════════════════
+Examples in this document are ILLUSTRATIVE, not PRESCRIPTIVE.
+
+• Folder structures show INTENT, actual paths may differ
+• Commands show CONCEPT, actual syntax depends on tooling
+• Task descriptions are GOALS, not step-by-step instructions
+
+The implementation agent (HyperArch) will determine actual file locations,
+command syntax, and implementation details based on current codebase state.
+════════════════════════════════════════════════════════════════════════════════
+-->
+
 ---
 
 ## 📊 Status Legend
@@ -59,6 +73,14 @@ last_updated: "{YYYY-MM-DD}"
 |-------------|-----------------|
 | `{command}` | {outcome} |
 
+### P0 Completion Checklist
+
+- [ ] Exit gate command runs successfully
+- [ ] All tasks marked ✅
+- [ ] No `[RESEARCH]` or `[EXPERIMENTAL]` items
+- [ ] ≤5 tasks total
+- [ ] Manual verification steps pass
+
 ---
 
 ## 🏗️ Phase 1: {Phase Name}
@@ -90,6 +112,13 @@ last_updated: "{YYYY-MM-DD}"
 | What to Try | Expected Result |
 |-------------|-----------------|
 | `{command}` | {outcome} |
+
+### P1 Completion Checklist
+
+- [ ] Exit gate command runs successfully
+- [ ] All `[EXPERIMENTAL]` items validated or cut
+- [ ] Manual verification steps pass
+- [ ] Linked module specs updated
 
 ---
 

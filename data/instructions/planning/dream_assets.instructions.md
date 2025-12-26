@@ -44,7 +44,7 @@ Every asset file MUST include:
 
 **Type:** {mockup|diagram|storyboard|infrastructure|design|data-model|other}  
 **Related Feature:** [Feature Title](../blueprint/NN_feature.md)  
-**Status:** [TODO] | [WIP] | [DONE]
+**Status:** `⏳ [TODO]` | `🔄 [WIP]` | `✅ [DONE]` | `🚧 [BLOCKED:reason]` | `🚫 [CUT]`
 
 ## Context
 Why this asset exists and what problem it addresses.
