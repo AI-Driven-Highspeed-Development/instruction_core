@@ -47,8 +47,8 @@ All templates at: `.agent_plan/day_dream/templates/`
 | `blueprint/01_executive_summary.template.md` | Vision, goals, non-goals | ≤150 lines |
 | `blueprint/02_architecture.template.md` | System diagrams, logical components | ≤200 lines |
 | `blueprint/NN_feature.template.md` | Per-feature details | ≤150 lines |
-| `blueprint/NN_implementation.template.md` | Phased roadmap | ≤200 lines per phase |
-| `blueprint/NN_references.template.md` | External links | No limit |
+| `blueprint/80_implementation.template.md` | Phased roadmap | ≤200 lines per phase |
+| `blueprint/99_references.template.md` | External links | No limit |
 | `blueprint/exploration.template.md` | Pre-vision research | ≤200 lines |
 
 ### Assets (Multi-Modal Artifacts)
@@ -156,7 +156,7 @@ Optional section for implementation-heavy features:
 - Line limit: ~100 lines (excluding embedded diagrams)
 - **Full specification**: See `dream_assets.instructions.md` for detailed rules
 
-#### Implementation (`NN_implementation.md`)
+#### Implementation (`80_implementation.md`)
 - YAML frontmatter required
 - Target Folder Structure: Per-phase NEW/MODIFIED files
 - P0 Hard Limits: 3-5 days, max 5 tasks, no `[RESEARCH]`
@@ -186,8 +186,8 @@ Optional section for implementation-heavy features:
 │   ├── 01_executive_summary.md
 │   ├── 02_architecture.md
 │   ├── 03_feature_*.md
-│   ├── NN_implementation.md
-│   └── NN_references.md
+│   ├── 80_implementation.md
+│   └── 99_references.md
 ├── assets/                  # Non-code artifacts
 │   ├── {feature_id}_{description}.asset.md
 │   └── ...

@@ -1,4 +1,4 @@
-# NN - References
+# 99 - References
 
 > Part of [{Project Name} Blueprint](./00_index.md)
 
@@ -57,7 +57,7 @@
 
 ---
 
-**Prev:** [Implementation](./NN_implementation.md)
+**Prev:** [Implementation](./80_implementation.md)
 
 ---
 

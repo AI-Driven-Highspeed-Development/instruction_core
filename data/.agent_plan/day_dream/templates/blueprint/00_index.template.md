@@ -50,15 +50,15 @@ This blueprint follows **HyperDream phasing rules**:
 | 02 | [Architecture](./02_architecture.md) | ✓ | High-level system design |
 | 03 | [Feature: {Name}](./03_feature_{name}.md) | | {Brief description} |
 | 04 | [Feature: {Name}](./04_feature_{name}.md) | | {Brief description} |
-| NN | [Implementation](./NN_implementation.md) | ✓ | Phase roadmap and task tracking |
-| NN | [References](./NN_references.md) | | External links and documentation |
+| 80 | [Implementation](./80_implementation.md) | ✓ | Phase roadmap and task tracking |
+| 99 | [References](./99_references.md) | | External links and documentation |
 
 <!-- 
-REQUIRED documents: 00, 01, 02, NN_implementation (4 minimum)
-OPTIONAL documents: Feature docs (03-08), References
+REQUIRED documents: 00, 01, 02, 80_implementation (4 minimum)
+OPTIONAL documents: Feature docs (03-79), References
 
-Add/remove feature docs as needed. NN prefix = variable numbering.
-Typical ordering: features 03-08, implementation 09, references 10
+Add/remove feature docs as needed. 80/99 prefix = fixed bottom sorting.
+Typical ordering: features 03-79, implementation 80, references 99
 -->
 
 ---
@@ -73,7 +73,7 @@ Typical ordering: features 03-08, implementation 09, references 10
 
 - **Start Here:** [Executive Summary](./01_executive_summary.md)
 - **Technical Deep Dive:** [Architecture](./02_architecture.md)
-- **Implementation:** [Roadmap](./NN_implementation.md)
+- **Implementation:** [Roadmap](./80_implementation.md)
 
 ---
 
@@ -87,7 +87,7 @@ flowchart TD
     
     ES --> Q2
     
-    Q2 -->|Yes| IMPL[NN - Implementation]
+    Q2 -->|Yes| IMPL[80 - Implementation]
     IMPL --> P0[Start at Phase 0<br/>Walking Skeleton]
     
     Q2 -->|No| ARCH[02 - Architecture]

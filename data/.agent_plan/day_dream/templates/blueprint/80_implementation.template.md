@@ -6,7 +6,7 @@ status: TODO
 last_updated: "{YYYY-MM-DD}"
 ---
 
-# NN - Implementation Plan
+# 80 - Implementation Plan
 
 > Part of [{Project Name} Blueprint](./00_index.md)
 
@@ -38,8 +38,8 @@ last_updated: "{YYYY-MM-DD}"
 
 | Status | Task | Module | Difficulty |
 |--------|------|--------|------------|
-| ⏳ `[TODO]` | {Task description} | `{module/}` | `[KNOWN]` |
-| ⏳ `[TODO]` | {Task description} | `{module/}` | `[KNOWN]` |
+| ⏳ | {Task description} | `{module/}` | `[KNOWN]` |
+| ⏳ | {Task description} | `{module/}` | `[KNOWN]` |
 
 ### P0 Hard Limits
 
@@ -74,8 +74,8 @@ last_updated: "{YYYY-MM-DD}"
 
 | Status | Task | Module | Difficulty |
 |--------|------|--------|------------|
-| ⏳ `[TODO]` | {Task description} | `{module/}` | `[KNOWN]` |
-| ⏳ `[TODO]` | {Task description} | `{module/}` | `[EXPERIMENTAL]` |
+| ⏳ | {Task description} | `{module/}` | `[KNOWN]` |
+| ⏳ | {Task description} | `{module/}` | `[EXPERIMENTAL]` |
 
 ### Target Folder Structure (P1)
 
@@ -102,7 +102,7 @@ last_updated: "{YYYY-MM-DD}"
 
 | Status | Task | Module | Difficulty |
 |--------|------|--------|------------|
-| ⏳ `[TODO]` | {Task description} | `{module/}` | `[RESEARCH]` |
+| ⏳ | {Task description} | `{module/}` | `[RESEARCH]` |
 
 ---
 
@@ -155,7 +155,7 @@ last_updated: "{YYYY-MM-DD}"
 <!--
 NOTES:
 1. Update YAML frontmatter when changing phases
-2. Status flow: ⏳ [TODO] → 🔄 [WIP] → ✅ [DONE]
+2. Status flow: ⏳ → 🔄 → ✅
 3. Target Folder Structure: NEW/MODIFIED files per phase only
 4. Task size: completable in 1-4 hours, 1-3 exit gate checks
 -->
