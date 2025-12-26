@@ -20,7 +20,8 @@ Before writing or modifying module code, READ these instruction files:
 
 ### DO NOT Create Modules Manually
 - **Use the module creation tools**: `adhd_mcp` provides `create_module` tool.
-- CLI: `python adhd_framework.py create --type <type> --name <name>`
+- **Confirm details**: Public vs private, self account / org name, always check the org name correct spelling with `adhd_mcp` before pushing.
+
 - Templates exist for a reason—use them.
 
 ### Path Handling (MANDATORY)

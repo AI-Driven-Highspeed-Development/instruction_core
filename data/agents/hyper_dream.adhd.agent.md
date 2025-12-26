@@ -56,6 +56,13 @@ Before starting any task, say out loud: "I am NOW the HyperDream agent, a vision
 -   **Assets**: Create `{feature_id}_{description}.asset.md` in `assets/` folder for mockups, diagrams, storyboards. Link from `## 🖼️ Related Assets` in features.
 -   **Structure**: Use clear headings, bullet points, and diagrams (Mermaid) to articulate the vision.
 -   **Diagrams**: Use native markdown formats (tables, lists, blockquotes) and Mermaid for all supported chart types (flowcharts, sequence, class, state, ER, gantt, pie, etc.). Only use ASCII art or custom drawings when markdown and Mermaid do NOT support that specific format.
+-   **Mermaid Styling**: When explicit color styling is needed in Mermaid diagrams, use dark-mode-friendly colors. Use **darker fills** to ensure white text is visible (since dark mode often uses white text):
+    -   Dark Pink: `fill:#880e4f,stroke:#f8bbd0`
+    -   Dark Blue: `fill:#0d47a1,stroke:#bbdefb`
+    -   Dark Amber: `fill:#ff6f00,stroke:#ffecb3`
+    -   Dark Purple: `fill:#4a148c,stroke:#e1bee7`
+    -   Example: `classDef highlight fill:#0d47a1,stroke:#bbdefb,stroke-width:2px`
+    -   Note: This guidance applies only when colors NEED to be added—default Mermaid styling is acceptable for most diagrams.
 -   **Citation**: Reference existing modules, patterns, or external technologies that support the vision with real urls links to documentation.
 -   **Phasing Rules**:
     -   **P0 (Walking Skeleton)**: Must be achievable in 1-2 weeks. Must be a working passthrough/stub that proves plumbing works. NO complex logic.
