@@ -16,10 +16,45 @@ synthesized_to: null
 ## 📖 The Story
 
 <!--
-REQUIRED: What decision is blocked without this exploration?
+REQUIRED: Visual, scannable narrative — NOT a text wall.
+Use ASCII boxes, tables, and emoji anchors. A PM should grasp the problem/solution in 10 seconds.
+If you can't draw the pain and vision, you don't understand the feature.
 -->
 
-{We can't proceed with [feature/architecture] until we decide [X vs Y]. This exploration resolves that by [approach].}
+### 😤 The Pain
+
+<!-- What's broken? Who hurts? Show it visually! -->
+
+```
+Current Reality:
+┌─────────────────────────────────────────┐
+│  User wants {X}  ──────►  💥 BLOCKED 💥 │
+│                                         │
+│  Because: {root cause}                  │
+└─────────────────────────────────────────┘
+```
+
+| Who Hurts | Pain Level | Frequency |
+|-----------|------------|-----------|
+| {persona} | 🔥🔥🔥 High | Daily |
+| {persona} | 🔥🔥 Medium | Weekly |
+
+### ✨ The Vision
+
+<!-- What does success look like? Show the transformation! -->
+
+```
+After This Feature:
+┌─────────────────────────────────────────┐
+│  User wants {X}  ──────►  ✅ SUCCESS    │
+│                                         │
+│  Flow: {step} → {step} → {result}       │
+└─────────────────────────────────────────┘
+```
+
+### 🎯 One-Liner
+
+> {The elevator pitch in ONE sentence — what we're building and why it matters}
 
 ---
 
