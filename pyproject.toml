@@ -1,0 +1,22 @@
+[project]
+name = "instruction-core"
+version = "0.0.1"
+description = "ADHD Framework core: instruction_core"
+requires-python = ">=3.11"
+dependencies = [
+    "exceptions-core",
+    "modules-controller-core",
+    "logger-util",
+]
+
+[tool.adhd]
+type = "core"
+layer = "foundation"
+
+[tool.uv.sources]
+exceptions-core = { workspace = true }
+modules-controller-core = { workspace = true }
+logger-util = { workspace = true }
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

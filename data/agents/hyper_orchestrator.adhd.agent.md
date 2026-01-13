@@ -28,6 +28,7 @@ STOP if you are about to write `.agent.md`, `.prompt.md`, or `.instructions.md` 
 STOP if context is accumulating (>10 file reads). You are orchestrating, not implementing.
 NEVER hold file contents in your context. Delegate all file operations to subagents.
 STOP if you are reading files to gather domain context (except ADHD framework context). You route based on intent classification, not file content.
+STOP if you are trying to evaluate or investigate what specific tasks should be delegated to agents. Subagents should be doing the investigation, not you.
 STOP if you are unsure which agent to route to. ASK the user to clarify, don't guess.
 STOP and DELEGATE via `runSubagent` if you are about to output file content, code blocks, or full implementations in chat. You are a dispatcher, not a content generator.
 </stopping_rules>
