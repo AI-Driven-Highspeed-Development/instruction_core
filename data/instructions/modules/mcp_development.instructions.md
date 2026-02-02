@@ -15,22 +15,68 @@ applyTo: "mcps/**/*.py"
 ```
 mcps/<module_name>/
 ├── __init__.py           # Exports, path setup, auto-refresh
-├── init.yaml             # Module metadata (ADHD framework)
+├── pyproject.toml        # Module metadata (UV workspace member)
 ├── <name>_mcp.py         # FastMCP server: tool decorators ONLY
 ├── <name>_controller.py  # Business logic: all implementation here
 ├── refresh.py            # Optional: module refresh logic
-├── requirements.txt      # MCP-specific dependencies
 ├── tests/                # Unit tests (optional)
 └── playground/           # Interactive exploration (optional)
 ```
 Add additional files as needed (e.g., `models.py`, `helpers.py`, `constants.py`).
 
-### 2. **Separation of Concerns**:
+### 2. **pyproject.toml Configuration**:
+```toml
+[project]
+name = "adhd-mcp"
+version = "0.0.1"
+description = "ADHD Framework MCP: adhd_mcp"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.1.0",
+    # ... workspace dependencies
+]
+
+[tool.adhd]
+type = "mcp"
+
+[tool.uv.sources]
+# Declare workspace dependencies
+logger-util = { workspace = true }
+# ... other workspace members
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+```
+
+### 3. **UV Invocation Pattern** (CRITICAL):
+MCPs MUST be invoked as modules via UV for proper import resolution:
+```bash
+# Correct invocation pattern:
+uv run python -m mcps.adhd_mcp.adhd_mcp
+
+# For Claude Desktop / MCP Client configuration:
+{
+  "mcpServers": {
+    "adhd": {
+      "command": "uv",
+      "args": ["run", "python", "-m", "mcps.adhd_mcp.adhd_mcp"],
+      "cwd": "/path/to/adhd_framework_v3"
+    }
+  }
+}
+
+# NEVER use direct script execution (breaks imports):
+# ❌ python mcps/adhd_mcp/adhd_mcp.py
+# ❌ ./mcps/adhd_mcp/adhd_mcp.py
+```
+
+### 4. **Separation of Concerns**:
 - `*_mcp.py`: Thin wrapper. Contains ONLY `@mcp.tool()` decorators that delegate to controller.
 - `*_controller.py`: All business logic, file I/O, validation, state management.
 - NEVER put implementation logic in `*_mcp.py`—keep it under 10 lines per tool.
 
-### 3. **FastMCP Setup** (in `*_mcp.py`):
+### 5. **FastMCP Setup** (in `*_mcp.py`):
 ```python
 from mcp.server.fastmcp import FastMCP
 from mcps.<module>.<name>_controller import <Name>Controller
@@ -56,29 +102,29 @@ if __name__ == "__main__":
     main()
 ```
 
-### 4. **Controller Pattern** (in `*_controller.py`):
+### 6. **Controller Pattern** (in `*_controller.py`):
 - Class-based with `__init__(workspace_root: str | Path | None = None)`.
 - All methods return `dict[str, Any]` with `{"success": bool, ...}` pattern.
 - Use `Logger` from `utils.logger_util` for logging.
 - Provide module-level `get_<name>_controller()` singleton function.
 
-### 5. **CLI Registration** (`*_cli.py`):
+### 7. **CLI Registration** (`*_cli.py`):
 - Import: `from managers.cli_manager import CLIManager, ModuleRegistration, Command, CommandArg`
 - Handler signature: `def handler_name(args: argparse.Namespace) -> int:`
 - Handler path: `"mcps.<module>.<base>_cli:<function_name>"`
 - Use `_get_controller()` singleton pattern for controller access.
 - Return `int` (0 = success, non-zero = error).
 
-### 6. **Logging**: NEVER use `print()` in STDIO-based MCP servers—corrupts JSON-RPC. Use:
+### 8. **Logging**: NEVER use `print()` in STDIO-based MCP servers—corrupts JSON-RPC. Use:
 ```python
 from utils.logger_util import Logger
 log = Logger(name="<ControllerName>", verbose=False)
 log.info("Safe logging to stderr")
 ```
 
-### 7. **Tool Naming**: Follow MCP spec—use `snake_case` for tool names.
+### 9. **Tool Naming**: Follow MCP spec—use `snake_case` for tool names.
 
-### 8. **Docstrings**: Required for every tool. FastMCP auto-generates schema from:
+### 10. **Docstrings**: Required for every tool. FastMCP auto-generates schema from:
 - Function docstring → tool description
 - Type hints → argument types
 - Docstring `Args:` section → argument descriptions

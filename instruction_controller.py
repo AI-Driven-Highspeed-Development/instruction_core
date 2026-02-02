@@ -8,10 +8,10 @@ from typing import Optional
 
 import yaml
 
-from cores.exceptions_core.adhd_exceptions import ADHDError
-from cores.modules_controller_core.modules_controller import ModulesController
-from managers.config_manager import ConfigManager
-from utils.logger_util.logger import Logger
+from exceptions_core import ADHDError
+from modules_controller_core import ModulesController
+from config_manager import ConfigManager
+from logger_util import Logger
 
 
 class InstructionController:

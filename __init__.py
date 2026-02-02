@@ -1,15 +1,8 @@
-import os
 import sys
 from pathlib import Path
 
-# Add path handling to work from the new nested directory structure
-current_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.getcwd()  # Use current working directory as project root
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
-
-from cores.instruction_core.instruction_controller import InstructionController
-from utils.logger_util.logger import Logger
+from .instruction_controller import InstructionController
+from logger_util import Logger
 
 __all__ = ["InstructionController"]
 

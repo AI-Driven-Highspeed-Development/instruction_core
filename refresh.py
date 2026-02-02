@@ -2,12 +2,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-# Ensure project root is in sys.path
-if str(Path.cwd()) not in sys.path:
-    sys.path.append(str(Path.cwd()))
-
-from cores.instruction_core.instruction_controller import InstructionController
-from utils.logger_util.logger import Logger
+from .instruction_controller import InstructionController
+from logger_util import Logger
 
 def main() -> None:
     """

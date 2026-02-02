@@ -2,6 +2,10 @@
 applyTo: "cores/**/init.yaml, managers/**/init.yaml, plugins/**/init.yaml, utils/**/init.yaml, mcps/**/init.yaml"
 ---
 
+> **⚠️ DEPRECATION NOTICE**: `init.yaml` is being phased out in P3 (Phase 3) in favor of `pyproject.toml` metadata.
+> New modules should NOT create init.yaml files. Existing modules will be migrated.
+> This documentation is retained for legacy module maintenance only.
+
 # Module init.yaml Authoring Instructions
 
 `init.yaml`: Metadata:

@@ -16,10 +16,10 @@ Trigger patterns: "implement", "build", "create", "fix", "add feature", "modify"
 
 ### Phase Structure
 ```
-PRE-CHECK (HyperSan) → IMPLEMENT (HyperArch) → POST-CHECK (HyperSan)
-    ↓                        ↓                       ↓
-  Validate              Build Feature           Validate Result
-  Feasibility                                   
+PRE-CHECK (HyperSan) → IMPLEMENT (HyperArch) → POST-CHECK (HyperSan) → [DOC-UPDATE (HyperDream)]
+    ↓                        ↓                       ↓                        ↓
+  Validate              Build Feature           Validate Result        Update Blueprint
+  Feasibility                                                          (Conditional)
 ```
 
 ### Phase Flow
@@ -37,7 +37,13 @@ Phase 2: IMPLEMENT
 Phase 3: POST-CHECK
   → HyperSan validates implementation
   → If FAILED: Return to Phase 2 (max 2 retries)
-  → If PASSED: Finalize
+  → If PASSED: Continue
+
+Phase 4: DOC-UPDATE (Conditional)
+  → Trigger: Source is blueprint implementation doc (**/day_dream/**/80_implementation.md)
+  → HyperDream updates the implementation doc
+  → Mark completed tasks, update status
+  → If NOT triggered: Skip to Finalize
 ```
 
 ## Orchestration Steps
@@ -121,13 +127,33 @@ output_format: "summary"
 ```
 
 **Evaluate Response:**
-- If `passed: true` → Finalize
+- If `passed: true` → Continue to Phase 4 (if applicable) or Finalize
 - If `passed: false`:
   - Increment retry counter
   - If retries < 2: Return to Phase 2 with fix instructions
   - If retries >= 2: Report issues, suggest manual intervention
 
-### 5. Finalization
+### 5. Phase 4: DOC-UPDATE (Conditional)
+**Trigger Condition:** Source request references a blueprint implementation doc matching `**/day_dream/**/80_implementation.md`
+
+If triggered, invoke HyperDream:
+```yaml
+task: "Update implementation doc to reflect completed work"
+context: |
+  Implementation completed successfully for: [feature description]
+  Source doc: [path to 80_implementation.md]
+  Changes made: [HyperArch summary]
+success_criteria: |
+  - Mark implemented tasks as complete (checkbox or status update)
+  - Update any status/phase indicators
+  - Add implementation notes if relevant
+  - Preserve unimplemented items for future work
+output_format: "summary"
+```
+
+**Skip Condition:** If the request does NOT reference a blueprint implementation doc, skip directly to Finalization.
+
+### 6. Finalization
 Compile summary:
 - List all changes made
 - Note any warnings from validation
@@ -140,12 +166,13 @@ Compile summary:
 ## Implementation Complete ✅
 
 **Feature:** [description]
-**Phases Completed:** 3/3
+**Phases Completed:** 3/3 (or 4/4 if DOC-UPDATE triggered)
 
 ### Summary
 - **PRE-CHECK**: [HyperSan summary]
 - **IMPLEMENT**: [HyperArch summary]
 - **POST-CHECK**: [HyperSan summary]
+- **DOC-UPDATE**: [HyperDream summary] *(if triggered)*
 
 ### Files Modified
 - [file1]
@@ -195,3 +222,4 @@ agent: HyperRed
 - **Max 2 Retries**: If POST-CHECK fails twice, halt and report
 - **No Direct Implementation**: HyperOrch NEVER writes code
 - **Preserve HyperArch Autonomy**: HyperArch handles internal delegation (can invoke HyperSan/HyperRed itself)
+- **DOC-UPDATE is Conditional**: Only trigger when source references `**/day_dream/**/80_implementation.md`
