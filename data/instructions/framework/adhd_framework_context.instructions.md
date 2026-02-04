@@ -27,20 +27,35 @@ AI agents hit a **Context Wall** as complexity grows. This framework solves it v
   - `<name>.instructions.md`, `requirements.txt` (PyPI only)
   - `tests/` (optional), `playground/` (optional)
 
-## Module Types
+## Module Taxonomy
 
-| Type | Folder | Purpose | When |
-|:---|:---|:---|:---|
-| **Core** | `cores/` | Framework internals | NEVER create unless extending framework |
-| **Manager** | `managers/` | Stateful singletons, coordination | Needs state/lifecycle |
-| **Util** | `utils/` | Stateless pure functions | No state |
-| **Plugin** | `plugins/` | Project-specific extensions | Only for THIS project |
-| **MCP** | `mcps/` | AI tool integrations | Extending agent capabilities |
+### Layers (Required)
+Every module declares a `layer` in `pyproject.toml` indicating when it loads:
 
-**Decision**: State? → Manager. Stateless? → Util. Reusable? → Manager. Project-only? → Plugin.
+| Layer | Purpose | When to Use |
+|:---|:---|:---|
+| **foundation** | Core infrastructure, no ADHD deps | Bootstrap-time modules |
+| **runtime** | Normal operational modules | Most modules (default choice) |
+| **dev** | Development/testing tools only | Build tools, test utilities |
+
+### Folders (Derived from Path)
+Folder location determines module category - no explicit `type` field needed:
+
+| Folder | Purpose | When |
+|:---|:---|:---|
+| `cores/` | Framework internals | NEVER create unless extending framework |
+| `managers/` | Stateful singletons, coordination | Needs state/lifecycle |
+| `utils/` | Stateless pure functions | No state |
+| `plugins/` | Project-specific extensions | Only for THIS project |
+| `mcps/` | AI tool integrations | Extending agent capabilities |
+
+### MCP Flag (Optional)
+MCP servers add `mcp = true` in `[tool.adhd]` to enable special handling.
+
+**Decision**: State? → `managers/`. Stateless? → `utils/`. Reusable? → `managers/`. Project-only? → `plugins/`.
 
 ## Module Naming
-- **Suffix matches type**: `*_manager`, `*_util`, `*_plugin`, `*_core`, `*_mcp`
+- **Suffix matches folder**: `*_manager`, `*_util`, `*_plugin`, `*_core`, `*_mcp`
 - **Snake_case**, specific, descriptive
 - ✅ `oauth2_auth_manager` ❌ `auth`
 

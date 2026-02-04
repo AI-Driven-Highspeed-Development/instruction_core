@@ -37,7 +37,8 @@ dependencies = [
 ]
 
 [tool.adhd]
-type = "mcp"
+layer = "runtime"  # foundation | runtime | dev
+mcp = true         # Required for MCP servers
 
 [tool.uv.sources]
 # Declare workspace dependencies

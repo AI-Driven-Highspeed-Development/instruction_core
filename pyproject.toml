@@ -8,20 +8,14 @@ dependencies = [
     "modules-controller-core",
     "logger-util",
     "config-manager",
+    "pyyaml>=6.0",
 ]
 
 [project.urls]
 Repository = "https://github.com/AI-Driven-Highspeed-Development/instruction_core.git"
 
 [tool.adhd]
-type = "core"
 layer = "dev"
-
-[tool.uv.sources]
-exceptions-core = { git = "https://github.com/AI-Driven-Highspeed-Development/exceptions_core.git" }
-modules-controller-core = { git = "https://github.com/AI-Driven-Highspeed-Development/modules_controller_core.git" }
-logger-util = { git = "https://github.com/AI-Driven-Highspeed-Development/Logger-Util.git" }
-config-manager = { git = "https://github.com/AI-Driven-Highspeed-Development/config-manager.git" }
 
 [build-system]
 requires = ["hatchling"]
