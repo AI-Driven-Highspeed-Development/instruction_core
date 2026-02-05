@@ -1,5 +1,5 @@
 ---
-applyTo: "managers/**/*.instructions.md,plugins/**/*.instructions.md,utils/**/*.instructions.md,mcps/**/*.instructions.md,cores/**/*.instructions.md"
+applyTo: "modules/**/*.instructions.md"
 ---
 
 # Module Instructions Authoring Guidelines
@@ -29,8 +29,8 @@ Each instruction file MUST include sections in this exact order:
 - **Scope**: If the module is used globally, target all module types. If it's a helper for specific modules, scope it tightly.
 - **File Types**: Target `.py` files specifically. Avoid targeting non-code files (like `managers/**`).
 - **Root Files**: Include `*.py` to cover entry points like `adhd_framework.py`.
-- Standard pattern (Global): `applyTo: "project/**/*.py,managers/**/*.py,plugins/**/*.py,utils/**/*.py,mcps/**/*.py,cores/**/*.py,*.py"`
-- Standard pattern (Module-specific): `applyTo: "managers/specific_manager/**/*.py"`
+- Standard pattern (Global): `applyTo: "modules/**/*.py,project/**/*.py,*.py"`
+- Standard pattern (Module-specific): `applyTo: "modules/**/specific_module/**/*.py"`
 - Note: Adjust paths based on actual needs of the specific module, askuser if unsure.
 
 ## Template
@@ -38,7 +38,7 @@ Copy and adapt this template for any module instruction file.
 
 ````markdown
 ---
-applyTo: "project/**/*.py,managers/**/*.py,plugins/**/*.py,utils/**/*.py,mcps/**/*.py,cores/**/*.py,*.py"
+applyTo: "modules/**/*.py,project/**/*.py,*.py"
 ---
 
 <Module Name>:

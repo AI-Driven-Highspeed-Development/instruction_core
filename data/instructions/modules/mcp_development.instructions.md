@@ -1,5 +1,5 @@
 ---
-applyTo: "mcps/**/*.py"
+applyTo: "modules/**/*_mcp.py"
 ---
 
 # MCP Server Development Guidelines
@@ -13,7 +13,7 @@ applyTo: "mcps/**/*.py"
 
 ### 1. **File Structure**: Every MCP MUST have these core files:
 ```
-mcps/<module_name>/
+modules/<layer>/<module_name>/
 ├── __init__.py           # Exports, path setup, auto-refresh
 ├── pyproject.toml        # Module metadata (UV workspace member)
 ├── <name>_mcp.py         # FastMCP server: tool decorators ONLY
@@ -54,22 +54,22 @@ build-backend = "hatchling.build"
 MCPs MUST be invoked as modules via UV for proper import resolution:
 ```bash
 # Correct invocation pattern:
-uv run python -m mcps.adhd_mcp.adhd_mcp
+uv run python -m modules.runtime.adhd_mcp.adhd_mcp
 
 # For Claude Desktop / MCP Client configuration:
 {
   "mcpServers": {
     "adhd": {
       "command": "uv",
-      "args": ["run", "python", "-m", "mcps.adhd_mcp.adhd_mcp"],
+      "args": ["run", "python", "-m", "modules.runtime.adhd_mcp.adhd_mcp"],
       "cwd": "/path/to/adhd_framework_v3"
     }
   }
 }
 
 # NEVER use direct script execution (breaks imports):
-# ❌ python mcps/adhd_mcp/adhd_mcp.py
-# ❌ ./mcps/adhd_mcp/adhd_mcp.py
+# ❌ python modules/runtime/adhd_mcp/adhd_mcp.py
+# ❌ ./modules/runtime/adhd_mcp/adhd_mcp.py
 ```
 
 ### 4. **Separation of Concerns**:
@@ -80,7 +80,7 @@ uv run python -m mcps.adhd_mcp.adhd_mcp
 ### 5. **FastMCP Setup** (in `*_mcp.py`):
 ```python
 from mcp.server.fastmcp import FastMCP
-from mcps.<module>.<name>_controller import <Name>Controller
+from modules.<layer>.<module>.<name>_controller import <Name>Controller
 
 mcp = FastMCP(name="<name>", instructions="<description>")
 _controller: <Name>Controller | None = None
@@ -110,15 +110,15 @@ if __name__ == "__main__":
 - Provide module-level `get_<name>_controller()` singleton function.
 
 ### 7. **CLI Registration** (`*_cli.py`):
-- Import: `from managers.cli_manager import CLIManager, ModuleRegistration, Command, CommandArg`
+- Import: `from modules.runtime.cli_manager import CLIManager, ModuleRegistration, Command, CommandArg`
 - Handler signature: `def handler_name(args: argparse.Namespace) -> int:`
-- Handler path: `"mcps.<module>.<base>_cli:<function_name>"`
+- Handler path: `"modules.<layer>.<module>.<base>_cli:<function_name>"`
 - Use `_get_controller()` singleton pattern for controller access.
 - Return `int` (0 = success, non-zero = error).
 
 ### 8. **Logging**: NEVER use `print()` in STDIO-based MCP servers—corrupts JSON-RPC. Use:
 ```python
-from utils.logger_util import Logger
+from modules.foundation.logger_util import Logger
 log = Logger(name="<ControllerName>", verbose=False)
 log.info("Safe logging to stderr")
 ```

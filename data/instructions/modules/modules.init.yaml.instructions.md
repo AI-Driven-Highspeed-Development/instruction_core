@@ -1,5 +1,5 @@
 ---
-applyTo: "cores/**/init.yaml, managers/**/init.yaml, plugins/**/init.yaml, utils/**/init.yaml, mcps/**/init.yaml"
+applyTo: "modules/**/init.yaml"
 ---
 
 > **⚠️ DEPRECATION NOTICE**: `init.yaml` is being phased out in P3 (Phase 3) in favor of `pyproject.toml` metadata.
@@ -10,8 +10,8 @@ applyTo: "cores/**/init.yaml, managers/**/init.yaml, plugins/**/init.yaml, utils
 
 `init.yaml`: Metadata:
 - version: str (e.g., 0.0.1)
-- folder_path: str (e.g., managers/config_manager) # legacy, do not use or remove.
-- type: str (e.g., manager / core / util / plugin / mcp)
+- folder_path: str (e.g., modules/runtime/config_manager) # legacy, do not use or remove.
+- layer: str (foundation | runtime | dev)
 - repo_url: str (url to module repo in GitHub)
 - shows_in_workspace: bool (whether to show in ADHD workspace UI)
 - requirements: list of str (urls of required ADHD modules)
@@ -27,8 +27,8 @@ applyTo: "cores/**/init.yaml, managers/**/init.yaml, plugins/**/init.yaml, utils
 
 2. **Folder Path**: Specify the module's folder path relative to the project root (e.g., `managers/config_manager`). This is for legacy purposes; new modules should not have this field, old modules should retain it, only user can manually remove it.
 
-3. **Type**: Choose from predefined types:
-   - `core`, `manager`, `util`, `plugin`, `mcp`.
+3. **Layer**: Choose from predefined layers:
+   - `foundation` (bootstrap-time, no ADHD deps), `runtime` (most modules), `dev` (development tools).
 
 4. **Requirements**: List of URLs to required ADHD modules (e.g., `https://github.com/AI-Driven-Highspeed-Development/exceptions_core.git`).
 

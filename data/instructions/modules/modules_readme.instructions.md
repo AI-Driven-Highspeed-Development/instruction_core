@@ -1,5 +1,5 @@
 ---
-applyTo: "cores/**/README.md, managers/**/README.md, plugins/**/README.md, utils/**/README.md, mcps/**/README.md"
+applyTo: "modules/**/README.md"
 ---
 
 # Modules README Authoring Instructions

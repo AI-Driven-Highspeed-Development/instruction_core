@@ -1,5 +1,5 @@
 ---
-applyTo: "managers/**/*.py,plugins/**/*.py,utils/**/*.py,mcps/**/*.py,cores/**/*.py"
+applyTo: "modules/**/*.py"
 ---
 
 # Module Development Guidelines
@@ -39,7 +39,7 @@ sys.path.insert(0, project_root)
 
 1. **NEVER invent imports**: Search codebase first. Use `grep_search` or `semantic_search`.
 2. **NEVER guess API signatures**: Read the source file of the module you're calling.
-3. **NEVER create utilities that exist**: Check `utils/` and `managers/` first.
+3. **NEVER create utilities that exist**: Check `modules/` first.
 4. **NEVER use print() in MCP servers**: Corrupts JSON-RPC. Use `Logger` from `logger_util`.
 5. **NEVER hardcode paths**: Use `ConfigManager` for paths.
 
